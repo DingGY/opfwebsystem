@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CONFIG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <comPortConfig>
+    <bound>2400</bound>
+    <comTimeout>5000</comTimeout>
+    <stopBit>One</stopBit>
+    <parity>Even</parity>
+    <dataBits>0</dataBits>
+    <comPort>COM7</comPort>
+    <clockNum>0</clockNum>
+  </comPortConfig>
+  <url>ws://127.0.0.1:8000/test/</url>
+</CONFIG>

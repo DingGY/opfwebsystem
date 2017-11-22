@@ -1,0 +1,13 @@
+E:\项目\test\SerialClient\SerialClient\bin\Debug\SerialClient.exe
+E:\项目\test\SerialClient\SerialClient\bin\Debug\SerialClient.pdb
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.Properties.Resources.resources
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.csproj.GenerateResource.Cache
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.exe
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.pdb
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.MainForm.resources
+E:\项目\test\SerialClient\SerialClient\bin\Debug\SerialClient.xml
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.csprojResolveAssemblyReference.cache
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.SerialConfig.resources
+E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.UrlConfig.resources
+E:\项目\test\SerialClient\SerialClient\bin\Debug\websocket-sharp.dll
+E:\项目\test\SerialClient\SerialClient\bin\Debug\websocket-sharp.pdb

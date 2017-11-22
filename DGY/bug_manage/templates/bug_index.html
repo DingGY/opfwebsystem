@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>bug manage</title>
+  <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/custom.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="root">
+    <!-- navigation bar -->
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <font size="6">欢迎{{ username }}！</font>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="#">
+                <font size="4">首页</font>
+              </a>
+            </li>
+            <li>
+              <a href="/bug_manage/">
+                <font size="4">BUG管理</font>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <font size="4">使用教程</font>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <font size="4">软件下载</font>
+              </a>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Bug Quick Search">
+            </div>
+            <button type="submit" class="btn btn-success">搜索</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="row">
+      <!-- left page data -->
+      <div class="col-xs-4 ">
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-1">
+            <div class="list-group">
+              <li class="list-group-item list-group-item-success">
+                ip，com:{{ ip_com_selected }}
+              </li>
+              <li class="list-group-item list-group-item-success">
+                连接状态:{{ connect_status }}
+              </li>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-9 col-xs-offset-1">
+
+            <br>
+
+            <ul class="nav nav-pills nav-justified" role="tablist">
+
+              <li role="presentation" class="active">
+                <a href="#bug-list" aria-controls="bug-list" role="tab" data-toggle="tab">BUG列表</a>
+              </li>
+              <li role="presentation">
+                <a href="#describe" aria-controls="describe" role="tab" data-toggle="tab">描述</a>
+              </li>
+
+              <li role="presentation">
+                <a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">设置</a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <!-- COM and IP setting -->
+
+              <div role="tabpanel" class="tab-pane" id="setting">
+                <div class="row">
+                  <br>
+                  <div class="col-xs-4">
+                    <b class="text-default">设置IP:</b>
+                  </div>
+                  <div class="col-xs-6">
+                    <input id="set_ip" role="tabpanel" type="text" class="form-control" placeholder="IP">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <b class="text-default">设置COM:</b>
+                  </div>
+                  <div class="col-xs-6">
+                    <input id="set_ip" role="tabpanel" type="text" class="form-control" placeholder="COM">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-3 col-xs-offset-4">
+                    <br>
+                    <button class="btn btn-success">确定</button>
+                  </div>
+                </div>
+
+              </div>
+              <div role="tabpanel" class="tab-pane" id="describe">
+                <div class="bugmanage-scroll-describe"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane active" id="bug-list">
+                <!-- bug list display -->
+                <div class="bugmanage-scroll-buglist">
+                  <input type="text" class="form-control" placeholder="检索">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          名称
+                        </th>
+                        <th>
+                          创建者
+                        </th>
+                        <th>
+                          创建日期
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>rjx1246tty</td>
+                        <td>丁光宇</td>
+                        <td>1993.12.21</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- center page data -->
+      <div class="col-xs-3">
+        <div class="raw">
+          <div class="col-xs-12 col-xs-offset-2">
+            <button type="button" class="btn btn-success btn-lg" aria-label="Left Align" data-toggle="tooltip" data-placement="bottom"
+              title="开始测试">
+              <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-info btn-lg" aria-label="Left Align" data-toggle="tooltip" data-placement="bottom" title="单步调试">
+              <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-warning btn-lg" aria-label="Left Align" data-toggle="tooltip" data-placement="bottom"
+              title="暂停">
+              <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger btn-lg" aria-label="Left Align" data-toggle="tooltip" data-placement="bottom"
+              title="终止">
+              <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bugmanage-scroll-info">
+
+        </div>
+      </div>
+      <!-- right page data -->
+      <div class="col-xs-5">
+        <!-- running contorl -->
+        <div class="raw">
+          <div class="col-xs-11">
+            <!-- meter bug data output -->
+            <div data-spy="scroll" data-target="#navbar-bugmanage-output" data-offset="0" class="bugmanage-scroll-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="/static/jquery-1.9.1.min.js"></script>
+  <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+</body>
+
+</html>

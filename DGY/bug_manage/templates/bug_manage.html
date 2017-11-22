@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>bug manage</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/custom.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="root">
+        <!-- navigation bar -->
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <font size="6">欢迎{{ username }}！</font>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/bootstrap/">
+                                <font size="4">首页</font>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/bug_manage/">
+                                <font size="4">BUG管理</font>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <font size="4">使用教程</font>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <font size="4">软件下载</font>
+                            </a>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Bug Quick Search">
+                        </div>
+                        <button type="submit" class="btn btn-success">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <!-- left page data -->
+            <div class="col-xs-3 ">
+                <ul class="nav nav-pills" role="tablist">
+
+                    <li class="active">
+                        <a href="#property" aria-controls="property" role="tab" data-toggle="tab">
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"> 属性</span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tool" aria-controls="tool" role="tab" data-toggle="tab">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"> 工具</span>
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#manage" aria-controls="manage" role="tab" data-toggle="tab">
+                            <span class="glyphicon  glyphicon-folder-open" aria-hidden="true"> 管理</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="property"></div>
+                    <div role="tabpanel" class="tab-pane" id="tool"></div>
+                    <div role="tabpanel" class="tab-pane" id="manage">
+                        <div class="raw">
+                            <div class="col-xs-8 col-xs-offset-4">
+                                <div class="btn-group ">
+                                    <button type="button" class="btn btn-default btn-bg">
+                                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-bg" data-toggle="modal" data-target="#add-new-bug">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-bg">
+                                        <span class="glyphicon  glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                <div class="modal fade" tabindex="-1" id="add-new-bug">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group" >
+                                                            
+                                                            <label for="bug_name" class="control-label" id="add-new-bug-lable-name">
+
+                                                                <font size="3">BUG名称</font>
+
+                                                            </label>
+                                                            <input type="text" class="form-control" id="bug_name">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="bug_founder" class="control-label">
+                                                                <font size="3">创建者</font>
+                                                            </label>
+                                                            <input type="text" class="form-control" id="bug_founder">
+                                                        </div>
+                                                        <br>
+                                                        <div class="raw">
+                                                            <div class="col-xs-4 col-xs-offset-8">
+                                                                <button type="button" id="add-new-bug-close" data-dismiss="modal" class="btn btn-default btn-lg">关闭</button>
+                                                                <button type="button" id="add-new-bug-save" class="btn btn-success btn-lg">保存</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bugmanage-scroll-edit">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- bug edit tool list -->
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="/static/jquery-1.9.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script src="/static/bug_manage.js"></script>
+    <script>
+        window.onload = bug_manage_init;
+    </script>
+</body>
+
+</html>
