@@ -88,6 +88,7 @@ class ActionCell:
             recv_pack = str(self._web_req.websocket.wait().decode('ascii'))
             if recv_pack is None:
                 raise Exception("not recv a data from web")
+            # add websocket ui parse here
             recv_unpacked = recv_pack
             return recv_unpacked
         else:
@@ -95,7 +96,6 @@ class ActionCell:
 
     def send_web_to_serial(self):
         '''passthrough'''
-        print(0000000)
         send_data = self.recv_web()
         self.send_serial(send_data)
 
@@ -103,6 +103,10 @@ class ActionCell:
         '''passthrough'''
         send_data = self.recv_serial()
         self.send_web(send_data)
+    def run_logic(self,logic):
+        
+        return
+
     
 
 

@@ -68,8 +68,7 @@ def web_comm(request):
         ip,
         com
     )
-    while True:
-        get_cell(ip,com).recv_serial_to_web()
+    # add action here
     get_cell(ip,com).web_event.wait()
     return
 def boot(request):
