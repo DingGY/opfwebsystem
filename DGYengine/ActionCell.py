@@ -1,51 +1,116 @@
 from dwebsocket.decorators import *
 from django.http import *
+import sys,threading,time
 sys.path.append("e:\项目\python\web_project\DGYengine")
 from LogicParse import LogicParse
+from ClientParse import ClientParse
+
+action_cell_dic = {}
+
+def join_web_cell(req,user,ip,com):
+    cell_index = ip+com
+    if action_cell_dic.__contains__(cell_index):
+        action_cell_dic[cell_index].set_webreq(req,user)
+    else:
+        action_cell_dic[cell_index] = ActionCell()
+        action_cell_dic[cell_index].set_webreq(req,user)
+
+
+def join_serial_cell(req,ip,com):
+    cell_index = ip+com
+    if action_cell_dic.__contains__(cell_index):
+        action_cell_dic[cell_index].set_serialreq(req)
+    else:
+        action_cell_dic[cell_index] = ActionCell()
+        action_cell_dic[cell_index].set_serialreq(req)
+
+def get_cell(ip,com):
+    cell_index = ip+com
+    return action_cell_dic[cell_index]
+def dell_cell(ip,com):
+    cell_index = ip+com
+    del action_cell_dic[cell_index]
 class ActionCell:
-    def __init__(self,web_client):
-        self._serial_client_dic = {}
-        self._serial_client_recv_data_dic = {} 
-        self._web_client = web_client
-        self._logic_list = []
+    def __init__(self):
+        '''the web is leading action client'''
+        self.isSerialConn = False
+        self.isWebConn = False
+        self.web_event = threading.Event()
+        self.serial_event = threading.Event()
+        self.user_id = ""
 
-    def _get_sckey(self,ip,com):
-        return ip + ':' + com
-    def add_serial_client(self,ip,com,request):
-        self._serial_client_dic[self._get_sckey(ip,com)] = request
-    def clear_serial_client(self):
-        self._serial_client_dic.clear()
-    def remove_serial_client(self,ip,com):
-        del self._serial_client_dic[self._get_sckey(ip,com)]
-    def set_web_client(self,web_client):
-        self._web_client = web_client
+    def set_webreq(self,req,user):
+        if self.isWebConn and self.user_id != user:
+            raise Exception('the web cell is used')
+        else:
+            if self.isWebConn:
+                self.web_event.set()
+                # wait to the old websocket finished 
+                time.sleep(1)
+            self.web_event.clear()
+            self._web_req = req
+            self.user_id = user
+            self.isWebConn = True
 
-    def add_logic(self,logic):
-        self._logic_list.append(logic)
-    def clear_logic(self):
-        self._logic_list.clear()
-    def send_web_client(self,data):
-        self._web_client.send(data.encode())
-    def send_serial_client(self,data):
-        for sc_key, sc_val in self._serial_client_dic:
-            sc_val.send(data.encode())
-    def send_single_serial_client(self,ip,com,data):
-        self._serial_client_dic[self._get_sckey(ip,com)].send(data.encode())
+    def set_serialreq(self,req):
+        if self.isSerialConn:
+            raise Exception('the serial cell is used')
+        else:
+            self.serial_event.clear()
+            self._serial_req = req
+            self.isSerialConn = True
+   
+
+    def send_serial(self,data):
+        if self.isSerialConn:
+            self._serial_req.websocket.send(data.encode())
+        else:
+            raise Exception("serial not connect")
+
+    def recv_serial(self):
+        if self.isSerialConn:
+            recv_pack = str(self._serial_req.websocket.wait().decode('ascii'))
+            if recv_pack is None:
+                raise Exception("not recv a data from serial")
+            recv_unpacked = ClientParse(recv_pack)
+            return recv_unpacked.recv_data
+        else:
+            raise Exception("serial not connect")
+
+    def send_web(self,data):
+        if self.isWebConn:
+            self._web_req.websocket.send(data.encode())
+        else:
+            raise Exception("web client not connect")
+
+    def recv_web(self):
+        if self.isWebConn:
+            recv_pack = str(self._web_req.websocket.wait().decode('ascii'))
+            if recv_pack is None:
+                raise Exception("not recv a data from web")
+            recv_unpacked = recv_pack
+            return recv_unpacked
+        else:
+            raise Exception("web client not connect")
+
+    def send_web_to_serial(self):
+        '''passthrough'''
+        print(0000000)
+        send_data = self.recv_web()
+        self.send_serial(send_data)
+
+    def recv_serial_to_web(self):
+        '''passthrough'''
+        send_data = self.recv_serial()
+        self.send_web(send_data)
     
-    def recv_serial_client(self):
-        for sc_key, sc_val in self._serial_client_dic:
-            self._serial_client_recv_data_dic[sc_key] = sc_val.read()
 
-    def recv_single_serial_client(self, ip, com):
-        self._serial_client_recv_data_dic[self._get_sckey(ip,com)] = \
-            self._serial_client_dic[self._get_sckey(ip,com)].read()
-        
-    def recv_web_client(self):
-        return self._web_client.read()
-        
 
-    def run(self):
-        pass
+
+
+
+
+    
 
 
 

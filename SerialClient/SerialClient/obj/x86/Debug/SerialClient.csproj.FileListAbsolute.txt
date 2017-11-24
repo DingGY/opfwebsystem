@@ -11,3 +11,5 @@ E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.SerialConfig
 E:\项目\test\SerialClient\SerialClient\obj\x86\Debug\SerialClient.UrlConfig.resources
 E:\项目\test\SerialClient\SerialClient\bin\Debug\websocket-sharp.dll
 E:\项目\test\SerialClient\SerialClient\bin\Debug\websocket-sharp.pdb
+E:\项目\python\web_project\SerialClient\SerialClient\obj\x86\Debug\SerialClient.exe
+E:\项目\python\web_project\SerialClient\SerialClient\obj\x86\Debug\SerialClient.pdb

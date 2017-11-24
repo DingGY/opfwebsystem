@@ -39,6 +39,7 @@ function addNewBug() {
 }
 
 
+
 function bug_manage_init() {
     $("#add-new-bug-save").click(addNewBug);
     $('#add-new-bug').on('show.bs.modal', function (event) {

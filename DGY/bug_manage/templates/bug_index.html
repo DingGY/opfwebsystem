@@ -9,6 +9,22 @@
 </head>
 
 <body>
+    <div class="modal fade" tabindex="-1" role="dialog" id="set-config-confirm">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="modal-title-text">Modal title</h4>
+            </div>
+            <div class="modal-body">
+              <p id="modal-info-text">One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" id="modal-close-btn" data-dismiss="modal">确定</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
   <div id="root">
     <!-- navigation bar -->
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -21,12 +37,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li>
-              <a href="#">
+              <a href="/bug_manage/index/">
                 <font size="4">首页</font>
               </a>
             </li>
             <li>
-              <a href="/bug_manage/">
+              <a href="/bug_manage/manage/">
                 <font size="4">BUG管理</font>
               </a>
             </li>
@@ -88,6 +104,7 @@
               <!-- COM and IP setting -->
 
               <div role="tabpanel" class="tab-pane" id="setting">
+
                 <div class="row">
                   <br>
                   <div class="col-xs-4">
@@ -102,13 +119,13 @@
                     <b class="text-default">设置COM:</b>
                   </div>
                   <div class="col-xs-6">
-                    <input id="set_ip" role="tabpanel" type="text" class="form-control" placeholder="COM">
+                    <input id="set_com" role="tabpanel" type="text" class="form-control" placeholder="COM">
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-3 col-xs-offset-4">
                     <br>
-                    <button class="btn btn-success">确定</button>
+                    <button class="btn btn-success" id="set-config">确定</button>
                   </div>
                 </div>
 
@@ -153,7 +170,7 @@
         <div class="raw">
           <div class="col-xs-12 col-xs-offset-2">
             <button type="button" class="btn btn-success btn-lg" aria-label="Left Align" data-toggle="tooltip" data-placement="bottom"
-              title="开始测试">
+              title="开始测试" id="start-running">
               <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
             </button>
             <button type="button" class="btn btn-info btn-lg" aria-label="Left Align" data-toggle="tooltip" data-placement="bottom" title="单步调试">
@@ -180,7 +197,9 @@
         <div class="raw">
           <div class="col-xs-11">
             <!-- meter bug data output -->
-            <div data-spy="scroll" data-target="#navbar-bugmanage-output" data-offset="0" class="bugmanage-scroll-output"></div>
+            <div data-spy="scroll" data-target="#navbar-bugmanage-output" data-offset="0" class="bugmanage-scroll-output" id="output-mesge-scroll">
+
+            </div>
           </div>
         </div>
       </div>
@@ -190,10 +209,10 @@
 
   <script src="/static/jquery-1.9.1.min.js"></script>
   <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/jquery.cookie.js"></script>
+  <script src="/static/bug_index.js"></script>
   <script>
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    });
+    window.onload = bug_index_init;
   </script>
 </body>
 
