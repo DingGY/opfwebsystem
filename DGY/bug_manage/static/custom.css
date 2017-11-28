@@ -56,3 +56,30 @@
     background-color: rgba(33, 34, 33, 0.133);
     overflow: auto;
 }
+.bugmanage-scroll-editmain{
+    position: fixed;
+    height: 90%;
+    width: 50%;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    margin-right:10px;
+    background-color: rgba(192, 212, 125, 0.384);
+    overflow: auto;
+}
+.bugmanage-scroll-showeditresult{
+    position: fixed;
+    height: 90%;
+    width: 31%;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    margin-right:10px;
+    background-color: rgba(84, 85, 82, 0.384);
+    overflow: auto;
+}
+.bugmanage-scroll-showstepframe{
+    position: fixed;
+    height: 30%;
+    width: 23%;
+    background-color: rgba(84, 85, 82, 0.384);
+    overflow: auto;
+}

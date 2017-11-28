@@ -2,7 +2,7 @@ from dwebsocket.decorators import *
 from django.http import *
 import sys,threading,time
 sys.path.append("e:\项目\python\web_project\DGYengine")
-from LogicParse import LogicParse
+from LogicParse import  *
 from ClientParse import ClientParse
 
 action_cell_dic = {}
@@ -103,8 +103,24 @@ class ActionCell:
         '''passthrough'''
         send_data = self.recv_serial()
         self.send_web(send_data)
+
+    def logic_thread(self,logic):
+        logic.all_run()
+
+    def refresh_ui(self,ui_list):
+        return
+
     def run_logic(self,logic):
-        
+        t = threading.Thread(target=self.logic_thread,args=(logic))
+        t.start()
+        while True:
+            logic.wait_logic()
+            if logic.act_read_status:
+                recv_data = self.recv_serial()
+            if logic.act_write_status:
+                self.send_serial()
+            if logic.act_ui_status:
+                self.refresh_ui()
         return
 
     

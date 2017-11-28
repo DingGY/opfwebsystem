@@ -50,6 +50,6 @@ ADDR-SAVE-RD->ADDR
     SEND;
     READ;
     RD-VAL0 = CUT(RD-DATA);
-
+    IF-VAL
 ADDR-SAVE-WR->ADDR
 

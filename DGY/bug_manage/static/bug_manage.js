@@ -11,6 +11,15 @@ function err_alert(data) {
         '</div>';
     return err_alert
 }
+function add_bug_item(data){
+    var bug_item = 
+    '<a href="' + data +
+    '" class="list-group-item">' + 
+    data + 
+    '</a>';
+    return bug_item
+    
+}
 function addNewBug() {
     var csrftoken = $.cookie('csrftoken');
     $.ajaxSetup({
@@ -29,6 +38,7 @@ function addNewBug() {
         function (data, status) {
             if (data == "saved") {
                 $('#add-new-bug').modal('hide');
+                $('#bugmanage-list-group').append(add_bug_item($('#bug_name').val()));
             }
             if (data == "same name") {
                 $("#add-new-bug-lable-name").before(err_alert("Bug名称重复"));

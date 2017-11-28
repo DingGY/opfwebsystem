@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.utils import timezone
 import sys,time,threading
 #add the module path
-sys.path.append("e:\项目\python\web_project\DGYengine")
+sys.path.append(r"e:\项目\python\web_project\DGYengine")
 from ClientParse import ClientParse
 from ActionCell import *
 from .models import *
@@ -76,19 +76,23 @@ def boot(request):
 
 @ensure_csrf_cookie
 def bug_manage(request):
-    return render_to_response('bug_manage.html')
+    bug_list = Task.objects.all()
+    context = {
+        'bug_list':bug_list
+    }
+    return render_to_response('bug_manage.html',context=context)
 
 def add_bug(request):
     '''ajax add bug'''
     bug_name = request.POST['name']
     bug_founder = request.POST['founder']
-    bug_list = Bug.objects.filter(name__exact=bug_name)
-    if len(bug_list) == 0:
-        bug = Bug(
+    bug_list = Task.objects.filter(name__exact=bug_name)
+    if len(bug_list) == 0 and len(bug_name) >= 1:
+        task = Task(
             founder=bug_founder,
             name=bug_name,
         )
-        bug.save()
+        task.save()
         return HttpResponse("saved")
     else:
         return HttpResponse("same name")

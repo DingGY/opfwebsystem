@@ -70,11 +70,35 @@ class ClientUser(models.Model):
         return u"%s->%s" % (self.ip4_addr, self.com_id)
 
 
-
+class Logic(models.Model):
+    name = models.CharField(max_length=50,blank=True,null=True)
+    address = models.CharField(max_length=12)
+    ischange_addr = models.BooleanField(default=False)
+    isFE_begin = models.BooleanField(default=False)
+    send_delay = models.IntegerField(blank=True,null=True)
+    read_delay = models.IntegerField(blank=True,null=True)
+    step_num = models.IntegerField(blank=True,null=True)
+    frame = models.CharField(max_length=500,blank=True,null=True)
+    func_id = models.CharField(max_length=100,blank=True,null=True)
+    display_msg = models.CharField(max_length=200,blank=True,null=True)
+    val0 = models.CharField(max_length=100,blank=True,null=True)
+    val1 = models.CharField(max_length=100,blank=True,null=True)
+    val2 = models.CharField(max_length=100,blank=True,null=True)
+    val3 = models.CharField(max_length=100,blank=True,null=True)
+    val4 = models.CharField(max_length=100,blank=True,null=True)
+    val5 = models.CharField(max_length=100,blank=True,null=True)
+    val6 = models.CharField(max_length=100,blank=True,null=True)
+    val7 = models.CharField(max_length=100,blank=True,null=True)
+    val8 = models.CharField(max_length=100,blank=True,null=True)
+    val9 = models.CharField(max_length=100,blank=True,null=True)
+    def __str__(self):
+        return u"%s" % self.name
     
-class Bug(models.Model):
+class Task(models.Model):
     create_date = models.DateTimeField(
         auto_now_add=True,primary_key=True)
     founder = models.CharField(max_length=50)
     name = models.CharField(max_length=200)
-    step = models.FileField(max_length=5000,blank=True,null=True)
+    step = models.ManyToManyField("Logic")
+    def __str__(self):
+        return u"%s" % self.name

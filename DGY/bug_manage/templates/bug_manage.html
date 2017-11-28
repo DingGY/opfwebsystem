@@ -52,17 +52,17 @@
         </nav>
         <div class="row">
             <!-- left page data -->
-            <div class="col-xs-3 ">
+            <div class="col-xs-2 ">
                 <ul class="nav nav-pills" role="tablist">
 
                     <li class="active">
                         <a href="#property" aria-controls="property" role="tab" data-toggle="tab">
-                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"> 属性</span>
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true">属性</span>
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#tool" aria-controls="tool" role="tab" data-toggle="tab">
-                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"> 工具</span>
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true">工具</span>
                         </a>
                     </li>
 
@@ -95,8 +95,8 @@
                                             <div class="modal-header">
                                                 <div class="modal-body">
                                                     <form>
-                                                        <div class="form-group" >
-                                                            
+                                                        <div class="form-group">
+
                                                             <label for="bug_name" class="control-label" id="add-new-bug-lable-name">
 
                                                                 <font size="3">BUG名称</font>
@@ -125,7 +125,11 @@
                                 </div>
                             </div>
                             <div class="bugmanage-scroll-edit">
-
+                                <div class="list-group" id="bugmanage-list-group">
+                                    {% for bug in bug_list %}
+                                    <a href="{{ bug.name }}" class="list-group-item">{{ bug.name }}</a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,9 +137,157 @@
                 <!-- bug edit tool list -->
 
             </div>
+            <div class="col-xs-6">
+                <div class="bugmanage-scroll-editmain">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" id="show-bug-name">
+                                    bug name
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body" id="show-bug-msg-text">
+                                msg
+                            </div>
+                        </div>
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#set-single-action" aria-expanded="true">
+                                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"> 设置单步操作</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="set-single-action" class="panel-collapse collapse " role="tabpanel">
+                            <div class="panel-body">
+                                <div class="raw">
+                                    <!-- the left step config -->
+                                    <div class="col-xs-6">
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">名称</span>
+                                            <input type="text" class="form-control" id="step-name">
+                                        </div>
+                                        <br>
+                                        <div class="input-group">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">地址设置
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="#">Action</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Another action</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Something else here</a>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li>
+                                                        <a href="#">Separated link</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- /btn-group -->
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <br>
+                                        <label for="name">选择帧头设置</label>
+                                        <select class="form-control" id="step-select-fe">
+                                            <option>不使用</option>
+                                            <option>使用4个FE</option>
+                                        </select>
+                                        <br>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">发送延迟</span>
+                                            <input type="text" class="form-control" id="set-send-delay">
+                                            <span class="input-group-addon">接收延迟</span>
+                                            <input type="text" class="form-control" id="set-read-delay">
+                                        </div>
+                                        <br>
+                                        <label for="name">发送帧设置</label>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">状态字</span>
+                                            <input type="text" class="form-control" id="set-send-delay">
+
+                                        </div>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">数据内容</span>
+                                            <input type="text" class="form-control" id="set-read-delay">
+                                        </div>
+                                        <br>
+                                        <label for="name">选择动作类型</label>
+                                        <select class="form-control" id="step-select-fe">
+                                            <option>不使用</option>
+                                            <option>使用4个FE</option>
+                                        </select>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="message-text" class="control-label">显示信息:</label>
+                                            <textarea class="form-control" id="message-text"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xs-6">
+
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon">执行序号</span>
+                                            <input type="text" class="form-control" id="stepnum">
+                                        </div>
+                                        
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">val0</span>
+                                            <input type="text" class="form-control" id="val0">
+                                            <span class="input-group-addon">val1</span>
+                                            <input type="text" class="form-control" id="val1">
+                                        </div>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">val2</span>
+                                            <input type="text" class="form-control" id="val2">
+                                            <span class="input-group-addon">val3</span>
+                                            <input type="text" class="form-control" id="val3">
+                                        </div>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">val4</span>
+                                            <input type="text" class="form-control" id="val4">
+                                            <span class="input-group-addon">val5</span>
+                                            <input type="text" class="form-control" id="val5">
+                                        </div>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">val6</span>
+                                            <input type="text" class="form-control" id="val6">
+                                            <span class="input-group-addon">val7</span>
+                                            <input type="text" class="form-control" id="val7">
+                                        </div>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">val8</span>
+                                            <input type="text" class="form-control" id="val8">
+                                            <span class="input-group-addon">val9</span>
+                                            <input type="text" class="form-control" id="val9">
+                                        </div>
+                                        <br>
+                                        <label for="message-text" class="control-label">帧结构:</label>
+                                        <div class="bugmanage-scroll-showstepframe">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="bugmanage-scroll-showeditresult">
+
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
     </div>
 
     <script src="/static/jquery-1.9.1.min.js"></script>
