@@ -75,11 +75,4 @@
     margin-right:10px;
     background-color: rgba(84, 85, 82, 0.384);
     overflow: auto;
-}
-.bugmanage-scroll-showstepframe{
-    position: fixed;
-    height: 30%;
-    width: 23%;
-    background-color: rgba(84, 85, 82, 0.384);
-    overflow: auto;
-}
+}   

@@ -19,11 +19,14 @@ from bug_manage.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test/$', test),
-    url(r'^login/$',login_view),
-    url(r'^login/check/$',login_check),
-    url(r'^websocket/webcomm/$',web_comm),
-    url(r'^bug_manage/index/$',boot),
-    url(r'^bug_manage/manage/$',bug_manage),
-    url(r'^ajax/add_bug/$',add_bug),
-     url(r'^ajax/set_config/$',set_config),
+    url(r'^login/$', login_view),
+    url(r'^login/check/$', login_check),
+    url(r'^websocket/webcomm/$', web_comm),
+    url(r'^bug_manage/index/$', boot),
+    url(r'^bug_manage/manage/$', bug_manage),
+    url(r'^ajax/add_bug/$', add_bug),
+    url(r'^ajax/set_config/$', set_config),
+    url(r'^ajax/add_step/$', add_step),
+    url(r'^ajax/get_step/$', get_step),
+
 ]

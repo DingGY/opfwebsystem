@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <div id="root">
         <!-- navigation bar -->
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -57,24 +58,40 @@
 
                     <li class="active">
                         <a href="#property" aria-controls="property" role="tab" data-toggle="tab">
-                            <span class="glyphicon glyphicon-th-large" aria-hidden="true">属性</span>
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true">方法</span>
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#tool" aria-controls="tool" role="tab" data-toggle="tab">
-                            <span class="glyphicon glyphicon-wrench" aria-hidden="true">工具</span>
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true">步骤</span>
                         </a>
                     </li>
 
                     <li role="presentation">
                         <a href="#manage" aria-controls="manage" role="tab" data-toggle="tab">
-                            <span class="glyphicon  glyphicon-folder-open" aria-hidden="true"> 管理</span>
+                            <span class="glyphicon  glyphicon-folder-open" aria-hidden="true"> 任务</span>
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="property"></div>
-                    <div role="tabpanel" class="tab-pane" id="tool"></div>
+                    <div role="tabpanel" class="tab-pane" id="property">
+                        <div class="bugmanage-scroll-edit">
+                            <div class="list-group" id="bugmanage-func-list">
+                                {% for func in func_list %}
+                                <a href="#" class="list-group-item">{{ func.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tool">
+                        <div class="bugmanage-scroll-edit">
+                            <div class="list-group" id="bugmanage-step-list">
+                                {% for step in step_list %}
+                                <a href="#" class="list-group-item">{{ step.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                     <div role="tabpanel" class="tab-pane" id="manage">
                         <div class="raw">
                             <div class="col-xs-8 col-xs-offset-4">
@@ -125,9 +142,9 @@
                                 </div>
                             </div>
                             <div class="bugmanage-scroll-edit">
-                                <div class="list-group" id="bugmanage-list-group">
+                                <div class="list-group" id="bugmanage-bug-list">
                                     {% for bug in bug_list %}
-                                    <a href="{{ bug.name }}" class="list-group-item">{{ bug.name }}</a>
+                                    <a href="#" class="list-group-item">{{ bug.name }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -143,13 +160,26 @@
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" id="show-bug-name">
-                                    bug name
+                                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"> 设置任务</span>
                                 </a>
                             </h4>
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
                             <div class="panel-body" id="show-bug-msg-text">
-                                msg
+                                <div class="panel panel-default">
+                                    <!-- Default panel contents -->
+                                    <div class="panel-heading" id="task-name"></div>
+                                    <div class="panel-body">
+                                        <p id="task-info"></p>
+                                    </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Cras justo odio</li>
+                                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                                        <li class="list-group-item">Morbi leo risus</li>
+                                        <li class="list-group-item">Porta ac consectetur ac</li>
+                                        <li class="list-group-item">Vestibulum at eros</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="panel-heading" role="tab" id="headingOne">
@@ -160,9 +190,10 @@
                             </h4>
                         </div>
                         <div id="set-single-action" class="panel-collapse collapse " role="tabpanel">
-                            <div class="panel-body">
+                            <div class="panel-body" id='step-setting-panel'>
                                 <div class="raw">
                                     <!-- the left step config -->
+
                                     <div class="col-xs-6">
                                         <div class="input-group input-group">
                                             <span class="input-group-addon">名称</span>
@@ -176,22 +207,22 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="#">Action</a>
+                                                        <a href="#">上一步地址</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#">Another action</a>
+                                                        <a href="#">全A地址</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#">Something else here</a>
+                                                        <a href="#">全1地址</a>
                                                     </li>
                                                     <li role="separator" class="divider"></li>
                                                     <li>
-                                                        <a href="#">Separated link</a>
+                                                        <a href="#">自定义地址</a>
                                                     </li>
                                                 </ul>
                                             </div>
                                             <!-- /btn-group -->
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" id="step-address">
                                         </div>
                                         <br>
                                         <label for="name">选择帧头设置</label>
@@ -209,34 +240,20 @@
                                         <br>
                                         <label for="name">发送帧设置</label>
                                         <div class="input-group input-group">
-                                            <span class="input-group-addon">状态字</span>
-                                            <input type="text" class="form-control" id="set-send-delay">
-
-                                        </div>
-                                        <div class="input-group input-group">
-                                            <span class="input-group-addon">数据内容</span>
-                                            <input type="text" class="form-control" id="set-read-delay">
+                                            <span class="input-group-addon">帧格式</span>
+                                            <input type="text" class="form-control" id="set-frame-text">
                                         </div>
                                         <br>
-                                        <label for="name">选择动作类型</label>
-                                        <select class="form-control" id="step-select-fe">
-                                            <option>不使用</option>
-                                            <option>使用4个FE</option>
-                                        </select>
+                                        <label for="name">动作类型</label>
+                                        <div class="well" id='func-id'>123123</div>
                                         <br>
                                         <div class="form-group">
                                             <label for="message-text" class="control-label">显示信息:</label>
-                                            <textarea class="form-control" id="message-text"></textarea>
+                                            <textarea class="form-control" id="step-message-text"></textarea>
                                         </div>
 
                                     </div>
                                     <div class="col-xs-6">
-
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon">执行序号</span>
-                                            <input type="text" class="form-control" id="stepnum">
-                                        </div>
-                                        
                                         <div class="input-group input-group">
                                             <span class="input-group-addon">val0</span>
                                             <input type="text" class="form-control" id="val0">
@@ -268,10 +285,18 @@
                                             <input type="text" class="form-control" id="val9">
                                         </div>
                                         <br>
-                                        <label for="message-text" class="control-label">帧结构:</label>
-                                        <div class="bugmanage-scroll-showstepframe">
-
+                                        <div class="raw">
+                                            <div class="col-xs-8 col-xs-offset-2">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-info" id="add-new-step-btn">新建</button>
+                                                    <button type="button" class="btn btn-success" id="change-new-step-btn">修改</button>
+                                                    <button type="button" class="btn btn-danger" id="del-new-step-btn">删除</button>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <br>
+                                        <br>
+                                        <label for="message-text" class="control-label">帧结构:</label>
 
                                     </div>
                                 </div>

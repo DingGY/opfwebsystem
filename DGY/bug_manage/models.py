@@ -77,7 +77,6 @@ class Logic(models.Model):
     isFE_begin = models.BooleanField(default=False)
     send_delay = models.IntegerField(blank=True,null=True)
     read_delay = models.IntegerField(blank=True,null=True)
-    step_num = models.IntegerField(blank=True,null=True)
     frame = models.CharField(max_length=500,blank=True,null=True)
     func_id = models.CharField(max_length=100,blank=True,null=True)
     display_msg = models.CharField(max_length=200,blank=True,null=True)
@@ -93,12 +92,27 @@ class Logic(models.Model):
     val9 = models.CharField(max_length=100,blank=True,null=True)
     def __str__(self):
         return u"%s" % self.name
-    
+
+
+class StepAction(models.Model):
+    num = models.IntegerField(blank=True,null=True)
+    act = models.ForeignKey(Logic, null=True)
+
+class FuncMessage(models.Model):
+    name = models.CharField(max_length=200)
+    create_date = models.DateTimeField(
+        auto_now_add=True,primary_key=True)
+    func_id = models.CharField(max_length=200,blank=True,null=True)
+    msg = models.CharField(max_length=500)
+    def __str__(self):
+        return u"%s" % self.name
+
 class Task(models.Model):
     create_date = models.DateTimeField(
         auto_now_add=True,primary_key=True)
     founder = models.CharField(max_length=50)
     name = models.CharField(max_length=200)
-    step = models.ManyToManyField("Logic")
+    msg = models.CharField(max_length=500,blank=True,null=True)
+    step = models.ManyToManyField(StepAction,related_name="step")
     def __str__(self):
         return u"%s" % self.name

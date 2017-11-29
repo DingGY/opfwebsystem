@@ -5,3 +5,5 @@ from .models import *
 admin.site.register(ClientUser)
 admin.site.register(SerialData)
 admin.site.register(Meter)
+admin.site.register(Logic)
+admin.site.register(Task)
