@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <div id="root">
         <!-- navigation bar -->
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -95,54 +94,10 @@
                     <div role="tabpanel" class="tab-pane" id="manage">
                         <div class="raw">
                             <div class="col-xs-8 col-xs-offset-4">
-                                <div class="btn-group ">
-                                    <button type="button" class="btn btn-default btn-bg">
-                                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-bg" data-toggle="modal" data-target="#add-new-bug">
-                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-bg">
-                                        <span class="glyphicon  glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <div class="modal fade" tabindex="-1" id="add-new-bug">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="modal-body">
-                                                    <form>
-                                                        <div class="form-group">
 
-                                                            <label for="bug_name" class="control-label" id="add-new-bug-lable-name">
-
-                                                                <font size="3">BUG名称</font>
-
-                                                            </label>
-                                                            <input type="text" class="form-control" id="bug_name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="bug_founder" class="control-label">
-                                                                <font size="3">创建者</font>
-                                                            </label>
-                                                            <input type="text" class="form-control" id="bug_founder">
-                                                        </div>
-                                                        <br>
-                                                        <div class="raw">
-                                                            <div class="col-xs-4 col-xs-offset-8">
-                                                                <button type="button" id="add-new-bug-close" data-dismiss="modal" class="btn btn-default btn-lg">关闭</button>
-                                                                <button type="button" id="add-new-bug-save" class="btn btn-success btn-lg">保存</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="bugmanage-scroll-edit">
-                                <div class="list-group" id="bugmanage-bug-list">
+                                <div class="list-group" id="bugmanage-task-list">
                                     {% for bug in bug_list %}
                                     <a href="#" class="list-group-item">{{ bug.name }}</a>
                                     {% endfor %}
@@ -165,21 +120,67 @@
                             </h4>
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
-                            <div class="panel-body" id="show-bug-msg-text">
+                            <div class="panel-body" id="show-task-msg-text">
                                 <div class="panel panel-default">
                                     <!-- Default panel contents -->
-                                    <div class="panel-heading" id="task-name"></div>
-                                    <div class="panel-body">
-                                        <p id="task-info"></p>
+                                    <div class="panel-heading">
+                                        <strong id="task-name"></strong>
                                     </div>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Cras justo odio</li>
-                                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                                        <li class="list-group-item">Morbi leo risus</li>
-                                        <li class="list-group-item">Porta ac consectetur ac</li>
-                                        <li class="list-group-item">Vestibulum at eros</li>
-                                    </ul>
+                                    <div class="panel-body">
+                                        <p>
+                                            <strong>创建者：</strong>
+                                            <nobr id="task-founder"></nobr>
+                                        </p>
+                                        <p>
+                                            <strong>创建日期：</strong>
+                                            <nobr id="task-date"></nobr>
+                                        </p>
+                                        <br>
+                                        <p>
+                                            <strong>任务说明：</strong>
+                                        </p>
+                                        <nobr id="task-msg"></nobr>
+                                    </div>
                                 </div>
+                                <div class="raw">
+                                    <div class='col-xs-6'>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">任务名称</span>
+                                            <input type="text" class="form-control" id="task-input-name">
+                                        </div>
+                                        <br>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">创建者</span>
+                                            <input type="text" class="form-control" id="task-input-founder">
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="message-text" class="control-label">任务信息:</label>
+                                            <textarea class="form-control" id="task-message-text"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class='col-xs-6'>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">步骤序号</span>
+
+                                            <input type="text" class="form-control" id="task-input-num">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-success" id="add-task-logic-num">添加当前步骤</button>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="raw">
+                                            <div class="col-xs-8 col-xs-offset-2">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-info" id="add-new-task-btn">新建</button>
+                                                    <button type="button" class="btn btn-success" id="change-new-task-btn">修改</button>
+                                                    <button type="button" class="btn btn-danger" id="del-new-task-btn">删除</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="panel-heading" role="tab" id="headingOne">
@@ -247,11 +248,11 @@
                                         <label for="name">动作类型</label>
                                         <div class="well" id='func-id'>123123</div>
                                         <br>
+
                                         <div class="form-group">
                                             <label for="message-text" class="control-label">显示信息:</label>
                                             <textarea class="form-control" id="step-message-text"></textarea>
                                         </div>
-
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="input-group input-group">
@@ -303,8 +304,52 @@
 
                             </div>
                         </div>
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#set-func-msg" aria-expanded="true">
+                                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"> 行为模式</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="set-func-msg" class="panel-collapse collapse " role="tabpanel">
+                            <div class="panel-body" id='set-func-panel'>
+                                <div class="raw">
+                                    <div class='col-xs-6'>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">动作名称</span>
+                                            <input type="text" class="form-control" id="func-input-name">
+                                        </div>
+                                        <br>
+                                        <p>
+                                            <strong>创建时间: </strong>
+                                            <nobr id='func-creat-time'></nobr>
+                                        </p>
+                                        <br>
+                                        <div class="input-group input-group">
+                                            <span class="input-group-addon">动作 id</span>
+                                            <input type="text" class="form-control" id="func-input-id">
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="message-text" class="control-label">动作信息:</label>
+                                            <textarea class="form-control" id="func-message-text"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class='col-xs-6'>
+                                        <div class="raw">
+                                            <div class="col-xs-8 col-xs-offset-2">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-info" id="add-new-func-btn">新建</button>
+                                                    <button type="button" class="btn btn-success" id="change-new-func-btn">修改</button>
+                                                    <button type="button" class="btn btn-danger" id="del-new-func-btn">删除</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-xs-4">

@@ -19,13 +19,12 @@ class Meter(models.Model):
 
 class SerialData(models.Model):
     create_date = models.DateTimeField(\
-        auto_now_add=True,primary_key=True)
+        auto_now_add=True)
     addr = models.CharField(max_length=12, blank=True, null=True)
     status_word = models.CharField(max_length=10, blank=True, null=True)
     data_len = models.CharField(max_length=10, blank=True, null=True)
     data = models.CharField(max_length=200, blank=True, null=True)
     cs = models.CharField(max_length=10, blank=True, null=True)
-
     def __str__(self):
         return self.create_date.__str__()
 
@@ -101,7 +100,7 @@ class StepAction(models.Model):
 class FuncMessage(models.Model):
     name = models.CharField(max_length=200)
     create_date = models.DateTimeField(
-        auto_now_add=True,primary_key=True)
+        auto_now_add=True)
     func_id = models.CharField(max_length=200,blank=True,null=True)
     msg = models.CharField(max_length=500)
     def __str__(self):
@@ -109,10 +108,16 @@ class FuncMessage(models.Model):
 
 class Task(models.Model):
     create_date = models.DateTimeField(
-        auto_now_add=True,primary_key=True)
+        auto_now_add=True)
     founder = models.CharField(max_length=50)
     name = models.CharField(max_length=200)
     msg = models.CharField(max_length=500,blank=True,null=True)
     step = models.ManyToManyField(StepAction,related_name="step")
+    def delete(self):
+        '''delete every step for the task'''
+        step_list = self.step.all()
+        for step in step_list:
+            step.delete()
+        return super(Task,self).delete()
     def __str__(self):
         return u"%s" % self.name
