@@ -341,6 +341,27 @@ function addTaskLogic() {
         }
     );
 }
+function addStepFunc(){
+    func_id = $.cookie()['func'];
+    step_id = $.cookie()['step'];
+    ajaxPostComm(
+        "/ajax/step/addfunc/",
+        {
+            logic_id:step_id,
+            act_id: func_id,
+        },
+        function (data, status) {
+            func_name = $('#func-input-name').val()
+            if (data == "addfunced") {
+                $('func-id').text(func_name);
+                alert_msg('添加动作', '成功添加' + func_name, 'step-setting-panel', 'success');
+            }
+            if(data == 'not found'){
+                alert_msg('添加动作', '未找到 ' + func_name, 'step-setting-panel', 'danger');
+            }
+        }
+    );
+}
 function bug_manage_init() {
     $("#add-new-func-btn").click(addNewFunc);
     $("#add-new-task-btn").click(addNewTask);
@@ -355,4 +376,5 @@ function bug_manage_init() {
     $('#bugmanage-task-list').click(showTaskInfo);
     $('#bugmanage-func-list').click(showFuncInfo);
     $('#add-task-logic-num').click(addTaskLogic);
+    $('#add-step-func').click(addStepFunc);
 }

@@ -9,22 +9,27 @@
 </head>
 
 <body>
-    <div class="modal fade" tabindex="-1" role="dialog" id="set-config-confirm">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="modal-title-text">Modal title</h4>
-            </div>
-            <div class="modal-body">
-              <p id="modal-info-text">One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" id="modal-close-btn" data-dismiss="modal">确定</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="set-config-confirm">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="modal-title-text">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <p id="modal-info-text">One fine body&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="modal-close-btn" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
   <div id="root">
     <!-- navigation bar -->
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -130,35 +135,50 @@
                 </div>
 
               </div>
+              <!-- 描述 -->
               <div role="tabpanel" class="tab-pane" id="describe">
-                <div class="bugmanage-scroll-describe"></div>
+                <div class="bugmanage-scroll-describe">
+                  <div class="panel panel-info">
+                    <div class="panel-heading">
+                      <strong id='task-show-name'></strong>
+                    </div>
+                    <div class="panel-body">
+                      <p id='task-show-information'></p>
+                    </div>
+                    <div class="panel-footer">任务说明</div>
+                  </div>
+                </div>
               </div>
               <div role="tabpanel" class="tab-pane active" id="bug-list">
                 <!-- bug list display -->
                 <div class="bugmanage-scroll-buglist">
                   <input type="text" class="form-control" placeholder="检索">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>
-                          名称
-                        </th>
-                        <th>
-                          创建者
-                        </th>
-                        <th>
-                          创建日期
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>rjx1246tty</td>
-                        <td>丁光宇</td>
-                        <td>1993.12.21</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="panel panel-default">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>
+                            名称
+                          </th>
+                          <th>
+                            创建者
+                          </th>
+                          <th>
+                            创建日期
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id='task-name-table'>
+                        {% for s in task_list %}
+                        <tr>
+                          <td>{{ s.name }}</td>
+                          <td>{{ s.founder }}</td>
+                          <td>{{ s.create_date }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

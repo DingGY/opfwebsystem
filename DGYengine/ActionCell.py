@@ -29,6 +29,7 @@ def get_cell(ip,com):
     return action_cell_dic[cell_index]
 def dell_cell(ip,com):
     cell_index = ip+com
+    action_cell_dic[cell_index].close_webreq()
     del action_cell_dic[cell_index]
 class ActionCell:
     def __init__(self):
@@ -38,6 +39,10 @@ class ActionCell:
         self.web_event = threading.Event()
         self.serial_event = threading.Event()
         self.user_id = ""
+
+    def close_webreq(self):
+        self.web_event.set()
+        self.serial_event.set()
 
     def set_webreq(self,req,user):
         if self.isWebConn and self.user_id != user:
@@ -59,7 +64,7 @@ class ActionCell:
             self.serial_event.clear()
             self._serial_req = req
             self.isSerialConn = True
-   
+    
 
     def send_serial(self,data):
         if self.isSerialConn:
@@ -103,24 +108,29 @@ class ActionCell:
         '''passthrough'''
         send_data = self.recv_serial()
         self.send_web(send_data)
+    
+    def task(self,task,runner):
+        runner.run_all(task)
 
-    def logic_thread(self,logic):
-        logic.all_run()
-
-    def refresh_ui(self,ui_list):
+    def refresh_ui(self,ui):
+        self.send_web(ui)
         return
 
-    def run_logic(self,logic):
-        t = threading.Thread(target=self.logic_thread,args=(logic))
+    def run_task(self,task):
+        task_runner = LogicParse()
+        t = threading.Thread(target=self.task,args=(task,task_runner,))
         t.start()
         while True:
-            logic.wait_logic()
-            if logic.act_read_status:
-                recv_data = self.recv_serial()
-            if logic.act_write_status:
-                self.send_serial()
-            if logic.act_ui_status:
-                self.refresh_ui()
+            task_runner.wait_logic()
+            if task_runner.act_read_status:
+                task_runner.recv_data = self.recv_serial()
+            if task_runner.act_write_status:
+                self.send_serial(task_runner.send_data)
+            if task_runner.act_ui_status:
+                self.refresh_ui(task_runner.ui_msg)
+            if task_runner.is_finishrun:
+                break
+        self.close_webreq()
         return
 
     

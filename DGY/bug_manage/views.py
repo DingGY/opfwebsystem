@@ -45,7 +45,7 @@ def test(request):
         )
         get_cell(user_client.ip4_addr, user_client.com_id).serial_event.wait()
     else:
-        return
+        pass
 
 
 def login_view(request):
@@ -74,12 +74,20 @@ def web_comm(request):
         com
     )
     # add action here
+    task = Task.objects.get(name='Yujie')
+    get_cell(ip, com).run_task(task)
     get_cell(ip, com).web_event.wait()
+    
     return
 
 
 def boot(request):
-    return render_to_response('bug_index.html')
+    resp = render_to_response('bug_index.html')
+    task_list = Task.objects.all()
+    context = {
+        'task_list':task_list
+    } 
+    return render_to_response('bug_index.html',context)
 
 
 @ensure_csrf_cookie
@@ -103,12 +111,27 @@ def set_config(request):
     resp.set_cookie("ip", ip)
     resp.set_cookie("com", com)
     return resp
+def get_task_info(request):
+    task_name = request.GET['name']
+    try:
+        task_dic = Task.objects.filter(name=task_name).values()[0]
+        task_dic['create_date'] = task_dic['create_date'].strftime(
+            '%Y-%m-%d %H:%M:%S')
+        resp = HttpResponse(json.dumps(task_dic))
+        resp.set_cookie('run_task',task_name)
+        return resp
+    except:
+        return HttpResponse('not found')
+    
 
 
 def step_action(request, action):
-    step_name = request.POST['name']
-    print(step_name)
-    logic_list = Logic.objects.filter(name__exact=step_name)
+    if action == 'addfunc':
+        logic = Logic.objects.get(id=int(request.POST['logic_id']))
+        func = FuncMessage.objects.get(id=int(request.POST['act_id']))
+    else:
+        step_name = request.POST['name']
+        logic_list = Logic.objects.filter(name__exact=step_name)
     if action == 'add':
         if len(logic_list) == 0 and len(step_name) >= 1:
             logic = Logic(
@@ -171,6 +194,10 @@ def step_action(request, action):
             logic.val9=request.POST['val9']
             logic.save()
             return HttpResponse("changed")
+    elif action == 'addfunc':
+        logic.func_id = func.func_id
+        logic.save()
+        return HttpResponse("addfunced")
     else:
         return HttpResponse("step_action failed")
     return HttpResponse("not found")
@@ -187,8 +214,6 @@ def task_action(request, action):
         resp = HttpResponse(json.dumps(task_dic))
         resp.set_cookie("task", task.id)
         return resp
-
-            
     elif action == 'add':
         if len(task_list) == 0 and len(task_name) >= 1:
             task = Task(
@@ -236,7 +261,7 @@ def func_action(request, action):
             '%Y-%m-%d %H:%M:%S')
         resp = HttpResponse(json.dumps(func_dic))
         resp.set_cookie("func", func.id)
-        return HttpResponse(json.dumps(func_dic))
+        return resp
 
     elif action == 'add':
         if len(func_list) == 0 and len(func_name) >= 1:

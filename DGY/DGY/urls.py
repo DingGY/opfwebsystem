@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^ajax/step/(.+)/$', step_action),
     url(r'^ajax/task/(.+)/$', task_action),
     url(r'^ajax/func/(.+)/$', func_action),
+    url(r'^ajax/index/get_task/$', get_task_info),
 ]

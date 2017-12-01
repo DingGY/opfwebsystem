@@ -53,6 +53,20 @@ function init_websocket() {
         info_modal("WebSocket","打开失败"+evt);
     };
 }
+function selectTask(e){
+    task_name = $(e.target).parent().find("td:first-child").text();
+    send_data ={
+        name:task_name
+    }
+
+    $.get("/ajax/index/get_task/",send_data,function(data,status){
+        if(data != 'not found'){
+            var data_parsed = JSON.parse(data);
+            $('#task-show-name').text(data_parsed['name']);
+            $('#task-show-information').text(data_parsed['msg']);
+        }
+    });
+}
 function jobRunning(){
     init_websocket();
 }
@@ -61,4 +75,5 @@ function bug_index_init() {
     $('[data-toggle="tooltip"]').tooltip();
     $("#set-config").click(setConfig);
     $("#start-running").click(jobRunning);
+    $('#task-name-table').click(selectTask);
 }
