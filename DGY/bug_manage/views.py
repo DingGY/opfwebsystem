@@ -75,7 +75,7 @@ def web_comm(request):
     )
     # add action here
     task = Task.objects.get(name='Yujie')
-    get_cell(ip, com).run_task(task)
+    get_cell(ip, com).run_remote_task(task)
     get_cell(ip, com).web_event.wait()
     
     return

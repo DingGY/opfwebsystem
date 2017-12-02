@@ -109,16 +109,16 @@ class ActionCell:
         send_data = self.recv_serial()
         self.send_web(send_data)
     
-    def task(self,task,runner):
-        runner.run_all(task)
-
+    
     def refresh_ui(self,ui):
         self.send_web(ui)
         return
 
-    def run_task(self,task):
-        task_runner = LogicParse()
-        t = threading.Thread(target=self.task,args=(task,task_runner,))
+    def run_remote_task(self,task):
+        def run_task(task,runner):
+            runner.run_remote_all(task)
+        task_runner = RemoteLogicParse()
+        t = threading.Thread(target=run_task,args=(task,task_runner,))
         t.start()
         while True:
             task_runner.wait_logic()
@@ -133,7 +133,8 @@ class ActionCell:
         self.close_webreq()
         return
 
-    
+
+
 
 
 

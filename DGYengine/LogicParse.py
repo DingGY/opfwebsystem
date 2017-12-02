@@ -1,5 +1,6 @@
 from ClientParse import ClientParse
-import threading,time,sys
+import threading,time,sys,json
+from django.forms.models import model_to_dict
 sys.path.append(r"e:\项目\python\web_project\DGY\bug_manage")
 
 class _TaskFlow:
@@ -17,7 +18,11 @@ class _TaskFlow:
         self.show_msg_list = []
 
 
-class LogicParse:
+
+
+
+
+class RemoteLogicParse:
     def __init__(self):
         self._wait_logic_event = threading.Event()
         self._wait_act_event = threading.Event()
@@ -46,7 +51,7 @@ class LogicParse:
     def composite_frame(self,dic_data):
         frame = ''
         if dic_data.__contains__('FE_begin'):
-            frame += 'FEFEFEFE'
+            frame += 'FE FE FE FE'
         if dic_data.__contains__('addr'):
             frame += dic_data['addr']
         if dic_data.__contains__('frame'):
@@ -101,7 +106,7 @@ class LogicParse:
         self.reflash_action_ui(ui_msg)
         return act_ret
 
-    def run_all(self,task):
+    def run_remote_all(self,task):
         self.is_finishrun = False
         step_list = task.step.all().order_by('num')
         first_step = step_list[0]
@@ -111,3 +116,15 @@ class LogicParse:
         self.is_finishrun = True
         self.set_event()
 
+class LogicParse:
+    def __init__(self,task):
+        self._task = task
+    def parse_task(self):
+        task_list = []
+        step_list = self._task.step.all().order_by('num')
+        for step in step_list:
+            step_dic = {}
+            step_dic['num'] = step.num
+            step_dic['logic'] = model_to_dict(step.act)
+            task_list.append(step_dic)
+        print(json.dumps(task_list))
