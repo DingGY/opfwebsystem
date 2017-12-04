@@ -1,0 +1,15 @@
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\bin\Debug\LocalRunClient.exe
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\bin\Debug\LocalRunClient.pdb
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.MainForm.resources
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.Properties.Resources.resources
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.csproj.GenerateResource.Cache
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.exe
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.pdb
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.SerialConfig.resources
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.UrlConfig.resources
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\bin\Debug\LocalRunConfig.xml
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.ProgrammeSelect.resources
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\bin\Debug\Newtonsoft.Json.dll
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\bin\Debug\Newtonsoft.Json.pdb
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\bin\Debug\Newtonsoft.Json.xml
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunClient\obj\x86\Debug\LocalRunClient.csprojResolveAssemblyReference.cache
