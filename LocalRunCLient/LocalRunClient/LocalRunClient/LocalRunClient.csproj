@@ -37,6 +37,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LocalRunFunc">
+      <HintPath>..\LocalRunFunc\bin\Debug\LocalRunFunc.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\test\Json100r1\Bin\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>

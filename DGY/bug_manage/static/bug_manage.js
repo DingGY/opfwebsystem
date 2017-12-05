@@ -100,7 +100,7 @@ function setStepInfo(recv) {
 
     $('#set-send-delay').val(data['send_delay']);
     $('#set-read-delay').val(data['read_delay']);
-    $('#set-frame-text').val(data['frame']);
+    $('#set-frame-text').val(data['frame_set']);
     $('#func-id').text(data['func_id']);
     $('#step-message-text').val(data['display_msg']);
     $('#val0').val(data['val0']);
@@ -242,7 +242,16 @@ function changeTask() {
     );
 }
 
+function getFuncInfo(){
+    var data = {
+        name: $('#func-input-name').val(),
+        func_id: $('#func-input-id').val(),
+        msg: $('#func-message-text').val(),
+        frame_set: $('#func-frameset-text').val(),
 
+    };
+    return data
+}
 
 
 function setFuncInfo(recv) {
@@ -250,6 +259,7 @@ function setFuncInfo(recv) {
     $('#func-input-name').val(data['name']);
     $('#func-input-id').val(data['func_id']);
     $('#func-message-text').text(data['msg']);
+    $('#func-frameset-text').text(data['frame_set']);
     $('#func-creat-time').text(data['create_date']);
 }
 function showFuncInfo(e) {
@@ -268,11 +278,7 @@ function showFuncInfo(e) {
 function addNewFunc() {
     ajaxPostComm(
         "/ajax/func/add/",
-        {
-            name: $('#func-input-name').val(),
-            func_id: $('#func-input-id').val(),
-            msg: $('#func-message-text').val(),
-        },
+        getFuncInfo(),
         function (data, status) {
             if (data == "saved") {
                 $('#bugmanage-func-list').append((add_list_item($('#func-input-name').val())));
@@ -307,11 +313,7 @@ function changeFunc() {
     func_name = $('#func-input-name').val();
     ajaxPostComm(
         "/ajax/func/change/",
-        {
-            name: func_name,
-            func_id: $('#func-input-id').val(),
-            msg: $('#func-message-text').val(),
-        },
+        getFuncInfo(),
         function (data, status) {
             if (data == "changed") {
                 alert_msg('修改', '成功', 'set-func-panel', 'success');
@@ -352,8 +354,10 @@ function addStepFunc(){
         },
         function (data, status) {
             func_name = $('#func-input-name').val()
+            func_frameset = $('#func-frameset-text').val()
             if (data == "addfunced") {
                 $('func-id').text(func_name);
+                $('set-frame-text').text(func_frameset);
                 alert_msg('添加动作', '成功添加' + func_name, 'step-setting-panel', 'success');
             }
             if(data == 'not found'){

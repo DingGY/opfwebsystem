@@ -140,8 +140,7 @@ def step_action(request, action):
                 isFE_begin=request.POST['isFE_begin'],
                 send_delay=request.POST['send_delay'],
                 read_delay=request.POST['read_delay'],
-                frame=request.POST['frame'],
-                func_id=request.POST['func_id'],
+                func=FuncMessage.objects.get(func_id=request.POST['func_id']),
                 display_msg=request.POST['display_msg'],
                 val0=request.POST['val0'],
                 val1=request.POST['val1'],
@@ -164,6 +163,10 @@ def step_action(request, action):
         if len(logic_list) == 1:
             logic = logic_list[0]
             logic_dic = logic_list.values()[0]
+            # get the func of step
+            func_id = int(logic_dic['func_id'])
+            logic_dic['func_id'] = FuncMessage.objects.get(id=func_id).func_id
+            logic_dic['frame_set'] = FuncMessage.objects.get(id=func_id).frame_set
             resp = HttpResponse(json.dumps(logic_dic))
             resp.set_cookie("step", logic.id)
             return resp
@@ -179,8 +182,7 @@ def step_action(request, action):
             logic.isFE_begin=request.POST['isFE_begin']
             logic.send_delay=request.POST['send_delay']
             logic.read_delay=request.POST['read_delay']
-            logic.frame=request.POST['frame']
-            logic.func_id=request.POST['func_id']
+            logic.func=FuncMessage.objects.get(func_id=request.POST['func_id']) 
             logic.display_msg=request.POST['display_msg']
             logic.val0=request.POST['val0']
             logic.val1=request.POST['val1']
@@ -195,7 +197,7 @@ def step_action(request, action):
             logic.save()
             return HttpResponse("changed")
     elif action == 'addfunc':
-        logic.func_id = func.func_id
+        logic.func = func
         logic.save()
         return HttpResponse("addfunced")
     else:
@@ -269,6 +271,7 @@ def func_action(request, action):
                 name=func_name,
                 func_id=request.POST['func_id'],
                 msg=request.POST['msg'],
+                frame_set=request.POST['frame_set'],
             )
             func.save()
             resp = HttpResponse("saved")
@@ -284,8 +287,29 @@ def func_action(request, action):
             func.name = func_name
             func.func_id=request.POST['func_id']
             func.msg=request.POST['msg']
+            func.frame_set=request.POST['frame_set']
             func.save()
             return HttpResponse("changed")
     else:
         return HttpResponse("task_action failed")
     return HttpResponse("not found")
+
+@csrf_exempt
+def local_client(request):
+    client_opt = request.POST['opt']
+    client_data = request.POST['data']
+    print(request.POST['data'])
+    if client_opt == 'reflash':
+        task_name_list = []
+        task_name_dic = Task.objects.values('name')
+        for name in task_name_dic:
+            task_name_list.append(name['name'])
+        return HttpResponse(json.dumps(task_name_list))
+    if client_opt == 'get':
+        # try:
+        task = Task.objects.get(name=client_data)
+        logic_list = LogicParse(task).parse_task()
+        return HttpResponse(json.dumps({'logic_list':logic_list}))
+        # except:
+        #     pass    
+    return HttpResponse('not found') 

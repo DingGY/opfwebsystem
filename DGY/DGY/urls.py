@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^websocket/webcomm/$', web_comm),
     url(r'^bug_manage/index/$', boot),
     url(r'^bug_manage/manage/$', bug_manage),
+    url(r'^localclient/$', local_client),
     url(r'^ajax/set_config/$', set_config),
     url(r'^ajax/step/(.+)/$', step_action),
     url(r'^ajax/task/(.+)/$', task_action),

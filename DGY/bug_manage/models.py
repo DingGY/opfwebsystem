@@ -76,8 +76,7 @@ class Logic(models.Model):
     isFE_begin = models.BooleanField(default=False)
     send_delay = models.IntegerField(blank=True,null=True)
     read_delay = models.IntegerField(blank=True,null=True)
-    frame = models.CharField(max_length=500,blank=True,null=True)
-    func_id = models.CharField(max_length=100,blank=True,null=True)
+    func = models.ForeignKey('FuncMessage',null=True)
     display_msg = models.CharField(max_length=200,blank=True,null=True)
     val0 = models.CharField(max_length=100,blank=True,null=True)
     val1 = models.CharField(max_length=100,blank=True,null=True)
@@ -102,6 +101,7 @@ class FuncMessage(models.Model):
     create_date = models.DateTimeField(
         auto_now_add=True)
     func_id = models.CharField(max_length=200,blank=True,null=True)
+    frame_set = models.CharField(max_length=500,blank=True,null=True)
     msg = models.CharField(max_length=500)
     def __str__(self):
         return u"%s" % self.name

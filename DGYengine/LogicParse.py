@@ -19,10 +19,24 @@ class _TaskFlow:
 
 
 
+class LogicParse:
+    def __init__(self,task):
+        self._task = task
+    def parse_task(self):
+        logic_list = []
+        step_dic = {}
+        step_list = self._task.step.all().order_by('num')
+        for step in step_list:
+            step_dic.clear()
+            step_dic = model_to_dict(step.act)
+            # get the func name not the func id
+            step_dic['func'] = step.act.func.func_id
+            step_dic['frame_set'] = step.act.func.frame_set
+            logic_list.append(step_dic)
+        return logic_list
 
 
-
-class RemoteLogicParse:
+class RemoteLogicParse(LogicParse):
     def __init__(self):
         self._wait_logic_event = threading.Event()
         self._wait_act_event = threading.Event()
@@ -116,15 +130,3 @@ class RemoteLogicParse:
         self.is_finishrun = True
         self.set_event()
 
-class LogicParse:
-    def __init__(self,task):
-        self._task = task
-    def parse_task(self):
-        task_list = []
-        step_list = self._task.step.all().order_by('num')
-        for step in step_list:
-            step_dic = {}
-            step_dic['num'] = step.num
-            step_dic['logic'] = model_to_dict(step.act)
-            task_list.append(step_dic)
-        print(json.dumps(task_list))

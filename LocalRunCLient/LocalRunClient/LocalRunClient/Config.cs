@@ -11,19 +11,17 @@ namespace LocalRunClient
 {
     public struct SerialPortConfig
     {
+        
         public int bound;
         public int comTimeout;
         public StopBits stopBit;
         public Parity parity;
         public int dataBits;
-        public string comPort1;
-        public string comPort2;
-        public string comPort3;
         public int clockNum;
     }
     public class Config
     {
-
+        public string[] comPortArr;
         public SerialPortConfig comPortConfig;
         public string url;
         public string encryptionIP;
@@ -33,6 +31,7 @@ namespace LocalRunClient
         //
         public Config()
         {
+            comPortArr = new string[3];
         }
         /// <summary>
         /// 保存配置
@@ -64,44 +63,4 @@ namespace LocalRunClient
             return null;
         }
     }
-}
-public struct tt
-{
-    public string name;
-}
-public class TaskConfig
-{
-    //public class Logic
-    //{
-    //    public int id;
-    //    public string name;
-    //    public string address;
-    //    public bool ischange_addr;
-    //    public bool isFE_begin;
-    //    public int send_delay;
-    //    public int read_delay;
-    //    public string frame;
-    //    public string func_id;
-    //    public string display_msg;
-    //    public string val0;
-    //    public string val1;
-    //    public string val2;
-    //    public string val3;
-    //    public string val4;
-    //    public string val5;
-    //    public string val6;
-    //    public string val7;
-    //    public string val8;
-    //    public string val9;
-    //}
-    //public List<Logic> logicList;
-    //public string name1;
-
-    public List<tt> ll;
-    public TaskConfig()
-    {
-        ll = new List<tt>();
-        //logicList = new List<Logic>();
-    }
-
 }

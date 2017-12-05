@@ -10,60 +10,81 @@ using System.IO.Ports;
 using System.Threading;
 using Newtonsoft.Json;
 using System.IO;
-
-
+using LocalRunFunc;
+using System.Reflection;
 namespace LocalRunClient
 {
     public partial class MainForm : Form
     {
         
         public List<RichTextBox> showInfoBoxList;
+        public List<SerialPort> comList;
         public List<Thread> runnerList;
         public static Config clientConfig;
+        public delegate void UIfunc(string text, Color colr, int index);
+        public UIfunc UIDisplay;
         public MainForm()
         {
             InitializeComponent();
             clientConfig = Config.LoadConfig(@"LocalRunConfig.xml"); ;
             showInfoBoxList = new List<RichTextBox>();
             runnerList = new List<Thread>();
+            comList = new List<SerialPort>();
             showInfoBoxList.Add(richTextBox1);
             showInfoBoxList.Add(richTextBox2);
             showInfoBoxList.Add(richTextBox3);
+            comList.Add(new SerialPort());
+            comList.Add(new SerialPort());
+            comList.Add(new SerialPort());
+
             foreach (RichTextBox box in showInfoBoxList)
             {
                 box.SelectionFont = new Font("宋体",15,FontStyle.Bold);
                 box.SelectionColor = Color.Green;
             }
-            setRichText("给我一杯忘情水", Color.Green,2);
+            UIDisplay = new UIfunc(UpdateUI_Handle);
         }
 
 
-
+        public void initComPort(int index)
+        {
+            comList[index].Close();
+            comList[index].PortName = MainForm.clientConfig.comPortArr[index];
+            comList[index].BaudRate = MainForm.clientConfig.comPortConfig.bound;
+            comList[index].DataBits = 8;
+            comList[index].Parity = MainForm.clientConfig.comPortConfig.parity;
+            comList[index].ReadTimeout = MainForm.clientConfig.comPortConfig.comTimeout;
+            comList[index].StopBits = MainForm.clientConfig.comPortConfig.stopBit;
+            
+        }
+        public void UpdateUI_Handle(string text, Color colr, int index)
+        {
+            showInfoBoxList[index].SelectedText = text;
+            showInfoBoxList[index].SelectionColor = colr;
+        }
         public void setRichText(string text,Color colr,int index)
         {
-            showInfoBoxList[index].SelectionColor = colr;
-            showInfoBoxList[index].AppendText(text);
+            this.BeginInvoke(UIDisplay, text, colr, index);
         }
 
 
-        void runner(object sender)
+        private void _runner(object sender)
         {
             int index = (int)(sender);
             var comm = new ClientComm(clientConfig.url);
+            var runFunc = new RunFunc(index);
+            runFunc.SetUI(setRichText);
+            runFunc.SetIO(comList[index]);
             comm.send("get",MainForm.clientConfig.program);
             string json = comm.recv();
             Console.WriteLine(json);
             TaskConfig task = JsonConvert.DeserializeObject<TaskConfig>(json);
-            foreach (tt s in task.ll)
+            initComPort(index);
+            foreach (Logic logic in task.logic_list)
             {
-                Console.WriteLine(s.name);
+                MethodInfo logicFunc = runFunc.GetType().GetMethod(logic.func);
+                logicFunc.Invoke(runFunc, new object[] { logic });
             }
-            //JsonReader reader = new JsonTextReader(new StringReader());
-            //while (reader.Read())
-            //{
-            //    Console.WriteLine("Token: {0}, Value: {1}", reader.TokenType, reader.Value);
-            //}
-            return;
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -72,8 +93,7 @@ namespace LocalRunClient
                 runnerList.Clear();
                 for (int i = 0; i < 3;i++ )
                 {
-                    
-                    runnerList.Add(new Thread(new ParameterizedThreadStart(runner)));
+                    runnerList.Add(new Thread(new ParameterizedThreadStart(_runner)));
                     runnerList[i].Start(i);
                 }
             }
@@ -85,20 +105,19 @@ namespace LocalRunClient
 
         private void 串口设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new SerialConfig();
-            form.Show();
+            new SerialConfig().Show();
+
         }
 
         private void 网络设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new UrlConfig();
-            form.Show();
+            new UrlConfig().Show();
+
         }
 
         private void 方案选择ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new ProgrammeSelect();
-            form.Show();
+            new ProgrammeSelect().Show();
         }
     }
 }

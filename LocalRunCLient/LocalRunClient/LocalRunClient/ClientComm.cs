@@ -25,7 +25,7 @@ namespace LocalRunClient
                 _req = WebRequest.Create(_url) as HttpWebRequest;
                 _req.Method = "POST";
                 _req.ContentType = "application/x-www-form-urlencoded";
-                byte[] data = Encoding.ASCII.GetBytes(
+                byte[] data = Encoding.UTF8.GetBytes(
                     "opt=" + opt + "&data=" + sdata
                     );
                 Stream stream = _req.GetRequestStream();

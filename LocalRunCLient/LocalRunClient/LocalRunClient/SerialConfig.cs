@@ -27,9 +27,9 @@ namespace LocalRunClient
                 SerialSelectBox3.Items.Add(iterm);
             }
 
-            SerialSelectBox1.Text = MainForm.clientConfig.comPortConfig.comPort1;
-            SerialSelectBox2.Text = MainForm.clientConfig.comPortConfig.comPort2;
-            SerialSelectBox3.Text = MainForm.clientConfig.comPortConfig.comPort3;
+            SerialSelectBox1.Text = MainForm.clientConfig.comPortArr[0];
+            SerialSelectBox2.Text = MainForm.clientConfig.comPortArr[1];
+            SerialSelectBox3.Text = MainForm.clientConfig.comPortArr[2];
             string[] parityList = { Parity.Even.ToString(), Parity.Odd.ToString(), Parity.None.ToString() };
             foreach (string iterm in parityList)
             {
@@ -49,9 +49,9 @@ namespace LocalRunClient
 
         private void SerialYesButt_Click(object sender, EventArgs e)
         {
-            MainForm.clientConfig.comPortConfig.comPort1 = SerialSelectBox1.Text;
-            MainForm.clientConfig.comPortConfig.comPort2 = SerialSelectBox2.Text;
-            MainForm.clientConfig.comPortConfig.comPort3 = SerialSelectBox3.Text;
+            MainForm.clientConfig.comPortArr[0] = SerialSelectBox1.Text;
+            MainForm.clientConfig.comPortArr[1] = SerialSelectBox2.Text;
+            MainForm.clientConfig.comPortArr[2] = SerialSelectBox3.Text;
             if (ParitySelectBox.Text == Parity.Even.ToString())
             {
                 MainForm.clientConfig.comPortConfig.parity = Parity.Even;
