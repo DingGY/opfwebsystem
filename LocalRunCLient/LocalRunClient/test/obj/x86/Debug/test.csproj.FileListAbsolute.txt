@@ -1,0 +1,4 @@
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\test\bin\Debug\test.exe
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\test\bin\Debug\test.pdb
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\test\obj\x86\Debug\test.exe
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\test\obj\x86\Debug\test.pdb
