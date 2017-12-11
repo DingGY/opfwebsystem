@@ -218,9 +218,14 @@ def get_task_step(task):
         logic_list.append(step_dic)
         print(step.num)
     return logic_list
-
+def get_step_info(step):
+    step_dic={}
+    step_dic["step_num"] = step.num
+    step_dic["step_head"] = step.act.name
+    step_dic["step_text"] = step.act.display_msg
+    return step_dic
 def task_action(request, action):
-    if action != 'addstep' and action != 'delstep':
+    if action != 'addstep' and action != 'delstep' and action != 'changestep':
         task_name = request.POST['name']
         task_list = Task.objects.filter(name__exact=task_name)
     if action == 'get':
@@ -267,13 +272,22 @@ def task_action(request, action):
         task_step.save()
         task.step.add(task_step)
         task.save()
-        return HttpResponse("addsteped")
+        return HttpResponse(json.dumps(get_step_info(task_step)))
     elif action == 'delstep':
         task = Task.objects.get(id=int(request.POST['id']))
         step_action = StepAction.objects.get(num=int(request.POST['step_num']))
         task.step.remove(step_action)
         step_action.delete()
         return HttpResponse("deleted")
+    elif action == 'changestep':
+        task = Task.objects.get(id=int(request.POST['id']))
+        step_list = task.step.filter(num=int(request.POST['step_change_num']))
+        if len(step_list) == 0:
+            act_step = task.step.get(num=int(request.POST['step_num']))
+            act_step.num = int(request.POST['step_change_num'])
+            act_step.save()
+            print(json.dumps(get_task_step(task)))
+            return HttpResponse(json.dumps(get_task_step(task)))
     else:
         return HttpResponse("task_action failed")
     return HttpResponse("not found")
@@ -337,4 +351,4 @@ def local_client(request):
         return HttpResponse(json.dumps({'logic_list':logic_list}))
         # except:
         #     pass    
-    return HttpResponse('not found') 
+    return HttpResponse('not found')

@@ -18,9 +18,9 @@ function add_list_item(data) {
         '</a>';
     return bug_item
 }
-function delStepForTask(){
+function delStepForTask() {
     task_id = $.cookie()['task'];
-    var num  = $(this).parents(".bg-warning").prev().find("#task-step-list-num").text();
+    var num = $(this).parents(".bg-warning").prev().find("#task-step-list-num").text();
     ajaxPostComm(
         "/ajax/task/delstep/",
         {
@@ -34,46 +34,52 @@ function delStepForTask(){
         }
     );
 }
-function changeStepForTask(){
+function changeStepForTask() {
     task_id = $.cookie()['task'];
     var num_input = $(this).parents(".input-group").find("#input-change-num").val();
-    var num  = $(this).parents(".bg-warning").prev().find("#task-step-list-num").text();
+    var num = $(this).parents(".bg-warning").prev().find("#task-step-list-num").text();
     ajaxPostComm(
-        "/ajax/func/del/",
+        "/ajax/task/changestep/",
         {
-            name: $('#func-input-name').val(),
+            id: task_id,
+            step_num: num,
+            step_change_num: num_input,
         },
         function (data, status) {
-            if (data == "deleted") {
-                $('#bugmanage-func-list').find(":contains('" + func_name + "')").remove();
-                alert_msg('删除', '成功', 'set-func-panel', 'success');
-            }
-            if (data == "not found") {
-                alert_msg('删除', '未找到' + func_name, 'set-func-panel', 'danger');
+            if (data != "not found") {
+                flash_step_list_view(true);
+                var recv = JSON.parse(data);
+                for (var i in recv) {
+                    add_step_list_item(
+                        recv[i]['step_head'],
+                        recv[i]['step_text'],
+                        recv[i]['step_num']);
+                }
+                flash_step_list_view(false);
             }
         }
     );
 }
-var StepDic={};
+var StepDic = {};
 function add_step_list_item(head, text, num) {
     var step_item =
-        '<div class="panel-heading " role="tab" id="step-show-heading-'+num+'">' +
+        '<div class="panel-heading " role="tab" id="step-show-heading-' + num + '">' +
         '<h4 class="panel-title ">' +
-        '<a  role="button" data-toggle="collapse" data-parent="#accordion" href="#step-show-list-'+num+'"  aria-expanded="true">' +
-        '<span class="glyphicon " aria-hidden="true"><font size=12 id="task-step-list-num">'+num+'</font>  '+ head +'</span>'+
+        '<a  role="button" data-toggle="collapse" data-parent="#accordion" href="#step-show-list-' + num + '"  aria-expanded="true">' +
+        '<span class="glyphicon " aria-hidden="true"><font size=12 id="task-step-list-num">' + num + '</font>  ' + head + '</span>' +
         '</a>' +
         '</h4>' +
         '</div>' +
-        '<div id="step-show-list-'+num+'" class="bg-warning panel-collapse collapse" role="tabpanel">' +
+        '<div id="step-show-list-' + num + '" class="bg-warning panel-collapse collapse" role="tabpanel">' +
         '<div class="panel-body">' + text +
         '<div class="raw">' +
         '<div class="col-xs-5 col-xs-offset-7">' +
         '<div class="input-group">' +
         '<span class="input-group-btn">' +
-        '<button class="btn btn-danger" type="button" id="step-num-del-'+num+'">删除</button>' +
+        '<button class="btn btn-danger" type="button" id="step-num-del-' + num + '">删除</button>' +
         '</span>' +
         '<span class="input-group-btn">' +
-        '<button class="btn btn-success" type="button" id="step-num-change-'+num+'">修改</button>' +
+        '<button class="btn btn-success" type="button" id="step-num-change-' + num + '">修改</button>' +
         '</span>' +
         '<input type="text" id="input-change-num" class="form-control" placeholder="序号">' +
         '</div>' +
@@ -83,28 +89,29 @@ function add_step_list_item(head, text, num) {
         '</div>';
     StepDic[num] = step_item;
 }
+
 //add the new list for the task
-function flash_step_list_view(clearflag){
+function flash_step_list_view(clearflag) {
     $('#show-task-every-step').find('.panel').children().remove();
-    if(StepDic == {}){
+    if (StepDic == {}) {
         return;
     }
-    var dic = Object.keys(StepDic).sort(function (a,b){
+    var dic = Object.keys(StepDic).sort(function (a, b) {
         return a - b;
     });
-    for(var i in dic){
+    for (var i in dic) {
         $('#show-task-every-step').find('.panel').append(StepDic[dic[i]]);
-        $('#step-num-del-'+dic[i]).click(delStepForTask);
-        $('#step-num-change-'+dic[i]).click(changeStepForTask);
+        $('#step-num-del-' + dic[i]).click(delStepForTask);
+        $('#step-num-change-' + dic[i]).click(changeStepForTask);
     }
-    if(clearflag == true){
-        StepDic={};
+    if (clearflag == true) {
+        StepDic = {};
     }
-    
+
 }
-function delete_step_list_view(num){
-    $('#show-task-every-step').find('#step-show-heading-'+num).remove();
-    $('#show-task-every-step').find('#step-show-list-'+num).remove();
+function delete_step_list_view(num) {
+    $('#show-task-every-step').find('#step-show-heading-' + num).remove();
+    $('#show-task-every-step').find('#step-show-list-' + num).remove();
 }
 function alert_msg(title, data, postion, status) {
     $('#myAlert').remove();
@@ -266,7 +273,7 @@ function setTaskInfo(recv) {
     $('#task-input-founder').val(data['founder']);
     $('#task-message-text').val(data['msg']);
 
-    for(var i in data['step_info_list']){
+    for (var i in data['step_info_list']) {
         add_step_list_item(
             data['step_info_list'][i]['step_head'],
             data['step_info_list'][i]['step_text'],
@@ -440,20 +447,22 @@ function addTaskLogic() {
             logic_name: $.cookie()['step'],
         },
         function (data, status) {
-            if (data != "addsteped") {
-                alert_msg('添加步骤', '成功添加' + $('#step-name').val(), 'show-task-msg-text', 'success');
-                add_step_list_item();
-                flash_step_list_view(false);
-            }
-            else if (data == "same num") {
+            if (data == "same num") {
                 alert_msg('添加步骤', '序号重复 ' + $('#step-name').val(), 'show-task-msg-text', 'danger');
-            } else {
+            } else if(data == "not found") {
                 alert_msg('添加步骤', '未找到 ' + $('#step-name').val(), 'show-task-msg-text', 'danger');
+            } else {
+                var recv = JSON.parse(data);
+                alert_msg('添加步骤', '成功添加' + $('#step-name').val(), 'show-task-msg-text', 'success');
+                add_step_list_item(recv["step_head"],recv["step_text"],recv["step_num"]);
+                flash_step_list_view(false);
             }
         }
     );
-
 }
+
+
+
 function addStepFunc() {
     func_id = $.cookie()['func'];
     step_id = $.cookie()['step'];
@@ -477,6 +486,7 @@ function addStepFunc() {
         }
     );
 }
+
 function init_addr_select() {
     $("#before-addr").click(function () {
         $("#step-address").val("上一步地址");
