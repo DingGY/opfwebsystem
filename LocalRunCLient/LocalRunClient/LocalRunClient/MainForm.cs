@@ -36,12 +36,6 @@ namespace LocalRunClient
             comList.Add(new SerialPort());
             comList.Add(new SerialPort());
             comList.Add(new SerialPort());
-
-            foreach (RichTextBox box in showInfoBoxList)
-            {
-                box.SelectionFont = new Font("宋体",15,FontStyle.Bold);
-                box.SelectionColor = Color.Green;
-            }
             UIDisplay = new UIfunc(UpdateUI_Handle);
         }
 
@@ -59,8 +53,9 @@ namespace LocalRunClient
         }
         public void UpdateUI_Handle(string text, Color colr, int index)
         {
-            showInfoBoxList[index].SelectedText = text;
+            showInfoBoxList[index].SelectionFont = new Font("宋体", 15, FontStyle.Bold);
             showInfoBoxList[index].SelectionColor = colr;
+            showInfoBoxList[index].SelectedText = text;
         }
         public void setRichText(string text,Color colr,int index)
         {

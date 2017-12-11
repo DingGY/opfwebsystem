@@ -130,6 +130,17 @@ namespace LocalRunFunc
             return new string(charArray);
         }
         /// <summary>
+        /// 字符串倒序
+        /// </summary>
+        /// <param name="text">要改变的字符串</param>
+        /// <returns>字符串</returns>
+        public static string ReverseStrByByte(string text)
+        {
+            var charArray = Util.stringToByteArray(text);
+            Array.Reverse(charArray);
+            return Util.byteArrayToString(charArray,charArray.Length);
+        }
+        /// <summary>
         /// 字符转byte值
         /// </summary>
         /// <param name="value">字符串</param>
@@ -154,14 +165,14 @@ namespace LocalRunFunc
         }
         public static string GetCsByStr(string buff)
         {
-            List<byte> bytelist = new List<byte>();
-            for (int i = 0; i < (buff.Length / 2); i += 2)
-            {
-                bytelist.Add(Convert.ToByte(buff.Substring(i, 2), 16));
-            }
+            //List<byte> bytelist = new List<byte>();
+            //for (int i = 0; i < (buff.Length / 2); i += 2)
+            //{
+            //    bytelist.Add(Convert.ToByte(buff.Substring(i, 2), 16));
+            //}
+            var bs = stringToByteArray(buff);
             byte cs = 0;
-
-            foreach (byte b in bytelist)
+            foreach (byte b in bs)
             {
                 cs += b;
             }
@@ -290,7 +301,15 @@ namespace LocalRunFunc
             }
             return returnByte;
         }
-
+        public static string Add33ToStr(string s)
+        {
+            var bs = stringToByteArray(s);
+            for (int i = 0; i < bs.Length;i++ )
+            {
+                bs[i] += 0x33;
+            }
+            return byteArrayToString(bs, bs.Length);
+        }
         public static string BcdFormateReverse(string text)
         {
             StringBuilder note = new StringBuilder();

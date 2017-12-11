@@ -6,6 +6,23 @@ using System.Text.RegularExpressions;
 
 namespace LocalRunFunc
 {
+    public class Frame645
+    {
+        public string address;
+        public string data;
+        public string len;
+        public string status_word;
+        public string cs;
+        public string recv_data;
+        public bool isFinish = false;
+        public string getNoTagData
+        {
+            get
+            {
+                return data.Substring(0, data.Length - 8);
+            }
+        }
+    }
     public class FrameParse
     {
         protected Logic _logic;
@@ -16,12 +33,7 @@ namespace LocalRunFunc
         {
             _logic = logic;
         }
-        //public string reg_replace(string patt, string input, string repstr)
-        //{
-        //    var replaced = Regex.Replace(input, patt, repstr);
-        //    return replaced;
-        //}
-        //get logic value by index
+
 
         public void SetLogic(Logic logic)
         {
@@ -75,9 +87,11 @@ namespace LocalRunFunc
             }
             else if (index == "ADDR")
             {
-
-                return _logic.address;
-
+                if (_logic.ischange_addr)
+                {
+                    return _logic.address;
+                }
+                
             }
             return "";
         }
@@ -146,6 +160,7 @@ namespace LocalRunFunc
             Regex cs_match = new Regex(@"(?<csbytes>\w*?)\[CS\]");
             Regex csrep_match = new Regex(@"\[CS\]");
             string result = input;
+            Console.WriteLine(cs_match.Match(result).Groups["csbytes"].Value);
             while (cs_match.IsMatch(result))
             {
                 result = csrep_match.Replace(
@@ -158,23 +173,37 @@ namespace LocalRunFunc
         public string reg_add33(string input)
         {
             Regex add_match = new Regex(@"\[ADD\((?<add>\w*?)\)\]");
-            Regex csrep_match = new Regex(@"\[addrep\(.*?\)\]");
+            Regex addrep_match = new Regex(@"\[ADD\(.*?\)\]");
             string result = input;
-            //Console.WriteLine(add_match.Match(result).Groups["add"].Value);
-            
+
             while (add_match.IsMatch(result))
             {
-                result = csrep_match.Replace(
+                result = addrep_match.Replace(
                     result,
-                    Util.GetCsByStr(add_match.Match(result).Groups["csbytes"].Value),
+                    Util.Add33ToStr(add_match.Match(result).Groups["add"].Value),
                     1);
             }
             return result;
         }
+        public string reg_data(string input)
+        {
+            Regex data_match = new Regex(@"\[DATA\((?<data>\w*?)\)\]");
+            Regex datarep_match = new Regex(@"\[DATA\(.*?\)\]");
+            string result = input;
 
+            while (data_match.IsMatch(result))
+            {
+                result = datarep_match.Replace(
+                    result,
+                    Util.ReverseStrByByte(Util.Add33ToStr(data_match.Match(result).Groups["data"].Value)),
+                    1);
+            }
+            return result;
+        }
         public string parse_frame(string frame)
         {
             //operate parse
+            //this._logic = logic;
             MatchCollection len_match = Regex.Matches(frame, @"LEN\((?<valopt>.*?)\)", RegexOptions.ExplicitCapture);
             string frame_len = Util.byteToString(reg_calclen(len_match[0].Groups["valopt"].Value));
             //replace parse
@@ -200,7 +229,9 @@ namespace LocalRunFunc
                 pframe = Regex.Replace(pframe, s[0], s[1]);
             }
             //add 33 byte
-            reg_add33(pframe);
+            pframe = reg_add33(pframe);
+            //data format
+            pframe = reg_data(pframe);
             //replace CS parse
             pframe = reg_calcCS(pframe);
             return pframe;

@@ -24,10 +24,10 @@ class LogicParse:
         self._task = task
     def parse_task(self):
         logic_list = []
-        step_dic = {}
+        logic_list.clear()
         step_list = self._task.step.all().order_by('num')
         for step in step_list:
-            step_dic.clear()
+            step_dic = {}
             step_dic = model_to_dict(step.act)
             # get the func name not the func id
             step_dic['func'] = step.act.func.func_id

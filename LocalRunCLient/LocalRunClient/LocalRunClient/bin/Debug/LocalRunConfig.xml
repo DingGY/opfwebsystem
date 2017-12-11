@@ -14,5 +14,7 @@
     <clockNum>0</clockNum>
   </comPortConfig>
   <url>http://127.0.0.1:8000/localclient/</url>
+  <encryptionIP />
+  <encryptionPort />
   <program>装配</program>
 </CONFIG>

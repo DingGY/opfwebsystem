@@ -138,9 +138,10 @@ def step_action(request, action):
                 name=request.POST['name'],
                 address=request.POST['address'],
                 isFE_begin=request.POST['isFE_begin'],
+                ischange_addr=request.POST['ischange_addr'],
                 send_delay=request.POST['send_delay'],
                 read_delay=request.POST['read_delay'],
-                func=FuncMessage.objects.get(func_id=request.POST['func_id']),
+                #func=FuncMessage.objects.get(func_id=request.POST['func_id']),
                 display_msg=request.POST['display_msg'],
                 val0=request.POST['val0'],
                 val1=request.POST['val1'],
@@ -160,13 +161,14 @@ def step_action(request, action):
         else:
             return HttpResponse('name unqualified')
     elif action == 'get':
-        if len(logic_list) == 1:
+        if len(logic_list) == 1:    
             logic = logic_list[0]
             logic_dic = logic_list.values()[0]
-            # get the func of step
-            func_id = int(logic_dic['func_id'])
-            logic_dic['func_id'] = FuncMessage.objects.get(id=func_id).func_id
-            logic_dic['frame_set'] = FuncMessage.objects.get(id=func_id).frame_set
+            # get the func of step 
+            func_id = logic_dic['func_id']
+            if func_id != None:
+                logic_dic['func_id'] = FuncMessage.objects.get(id=func_id).func_id
+                logic_dic['frame_set'] = FuncMessage.objects.get(id=func_id).frame_set
             resp = HttpResponse(json.dumps(logic_dic))
             resp.set_cookie("step", logic.id)
             return resp
@@ -204,8 +206,21 @@ def step_action(request, action):
         return HttpResponse("step_action failed")
     return HttpResponse("not found")
 
+def get_task_step(task):
+    '''get the task step info'''
+    step_list = task.step.all().order_by('num')
+    logic_list= []
+    for step in step_list:
+        step_dic = {}
+        step_dic["step_num"] = step.num
+        step_dic["step_head"] = step.act.name
+        step_dic["step_text"] = step.act.display_msg
+        logic_list.append(step_dic)
+        print(step.num)
+    return logic_list
+
 def task_action(request, action):
-    if action != 'addstep':
+    if action != 'addstep' and action != 'delstep':
         task_name = request.POST['name']
         task_list = Task.objects.filter(name__exact=task_name)
     if action == 'get':
@@ -213,6 +228,7 @@ def task_action(request, action):
         task_dic = task_list.values()[0]
         task_dic['create_date'] = task_dic['create_date'].strftime(
             '%Y-%m-%d %H:%M:%S')
+        task_dic['step_info_list'] = get_task_step(task)
         resp = HttpResponse(json.dumps(task_dic))
         resp.set_cookie("task", task.id)
         return resp
@@ -240,7 +256,10 @@ def task_action(request, action):
             task.save()
             return HttpResponse('changed')
     elif action == 'addstep':
+
         task = Task.objects.get(id=int(request.POST['id']))
+        if len(task.step.filter(num=int(request.POST['num']))) != 0:
+            return HttpResponse('same num')
         task_step = StepAction(
             num = int(request.POST['num']),
             act = Logic.objects.get(id=int(request.POST['logic_name']))
@@ -249,6 +268,12 @@ def task_action(request, action):
         task.step.add(task_step)
         task.save()
         return HttpResponse("addsteped")
+    elif action == 'delstep':
+        task = Task.objects.get(id=int(request.POST['id']))
+        step_action = StepAction.objects.get(num=int(request.POST['step_num']))
+        task.step.remove(step_action)
+        step_action.delete()
+        return HttpResponse("deleted")
     else:
         return HttpResponse("task_action failed")
     return HttpResponse("not found")
