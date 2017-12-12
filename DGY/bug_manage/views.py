@@ -127,8 +127,11 @@ def get_task_info(request):
 
 def step_action(request, action):
     if action == 'addfunc':
-        logic = Logic.objects.get(id=int(request.POST['logic_id']))
-        func = FuncMessage.objects.get(id=int(request.POST['act_id']))
+        try:
+            logic = Logic.objects.get(id=int(request.POST['logic_id']))
+            func = FuncMessage.objects.get(id=int(request.POST['act_id']))
+        except:
+            return HttpResponse("not add new logic or select func") 
     else:
         step_name = request.POST['name']
         logic_list = Logic.objects.filter(name__exact=step_name)
@@ -181,10 +184,11 @@ def step_action(request, action):
             logic = logic_list[0]
             logic.name=request.POST['name']
             logic.address=request.POST['address']
+            logic.ischange_addr=request.POST['ischange_addr']
             logic.isFE_begin=request.POST['isFE_begin']
             logic.send_delay=request.POST['send_delay']
             logic.read_delay=request.POST['read_delay']
-            logic.func=FuncMessage.objects.get(func_id=request.POST['func_id']) 
+            #logic.func=FuncMessage.objects.get(func_id=request.POST['func_id']) 
             logic.display_msg=request.POST['display_msg']
             logic.val0=request.POST['val0']
             logic.val1=request.POST['val1']
@@ -261,8 +265,10 @@ def task_action(request, action):
             task.save()
             return HttpResponse('changed')
     elif action == 'addstep':
-
-        task = Task.objects.get(id=int(request.POST['id']))
+        try:
+            task = Task.objects.get(id=int(request.POST['id']))
+        except:
+            return HttpResponse("not add task")
         if len(task.step.filter(num=int(request.POST['num']))) != 0:
             return HttpResponse('same num')
         task_step = StepAction(

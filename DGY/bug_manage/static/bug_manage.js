@@ -144,7 +144,7 @@ function getStepInfo() {
         isFE_begin: fe_begin_flag,
         send_delay: $('#set-send-delay').val(),
         read_delay: $('#set-read-delay').val(),
-        frame: $('#set-frame-text').val(),
+        frame: $('#set-frame-text').text(),
         // func_id: $('#func-id').text(),
         display_msg: $('#step-message-text').val(),
         val0: $('#val0').val(),
@@ -202,7 +202,7 @@ function setStepInfo(recv) {
 
     $('#set-send-delay').val(data['send_delay']);
     $('#set-read-delay').val(data['read_delay']);
-    $('#set-frame-text').val(data['frame_set']);
+    $('#set-frame-text').text(data['frame_set']);
     $('#func-id').text(data['func_id']);
     $('#step-message-text').val(data['display_msg']);
     $('#val0').val(data['val0']);
@@ -451,7 +451,10 @@ function addTaskLogic() {
                 alert_msg('添加步骤', '序号重复 ' + $('#step-name').val(), 'show-task-msg-text', 'danger');
             } else if(data == "not found") {
                 alert_msg('添加步骤', '未找到 ' + $('#step-name').val(), 'show-task-msg-text', 'danger');
-            } else {
+            } else if(data == "not add task"){
+                alert_msg('添加步骤', '未新建任务', 'show-task-msg-text', 'danger');
+            }
+            else {
                 var recv = JSON.parse(data);
                 alert_msg('添加步骤', '成功添加' + $('#step-name').val(), 'show-task-msg-text', 'success');
                 add_step_list_item(recv["step_head"],recv["step_text"],recv["step_num"]);
@@ -479,15 +482,16 @@ function addStepFunc() {
                 $('#func-id').text(func_name);
                 $('#set-frame-text').text(func_frameset);
                 alert_msg('添加动作', '成功添加' + func_name, 'step-setting-panel', 'success');
-            }
-            if (data == 'not found') {
+            }else if (data == 'not found') {
                 alert_msg('添加动作', '未找到 ' + func_name, 'step-setting-panel', 'danger');
+            }else if (data == 'not add new logic or select func') {
+                alert_msg('添加动作', '未新建步骤或未选中方法 ', 'step-setting-panel', 'danger');
             }
         }
     );
 }
 
-function init_addr_select() {
+function init_view() {
     $("#before-addr").click(function () {
         $("#step-address").val("上一步地址");
         $("#step-address").attr("readonly", "true");
@@ -504,10 +508,11 @@ function init_addr_select() {
         $("#step-address").val("");
         $("#step-address").removeAttr("readonly");
     });
+    $("#set-read-delay").val(0);
+    $("#set-send-delay").val(0);
 }
 
 function bug_manage_init() {
-
     $("#add-new-func-btn").click(addNewFunc);
     $("#add-new-task-btn").click(addNewTask);
     $('#add-new-step-btn').click(addNewStep);
@@ -522,6 +527,5 @@ function bug_manage_init() {
     $('#bugmanage-func-list').click(showFuncInfo);
     $('#add-task-logic-num').click(addTaskLogic);
     $('#add-step-func').click(addStepFunc);
-    init_addr_select();
-
+    init_view();
 }

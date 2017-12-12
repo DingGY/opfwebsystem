@@ -39,6 +39,11 @@ namespace LocalRunFunc
         {
             _logic = logic;
         }
+        /// <summary>
+        /// get local value
+        /// </summary>
+        /// <param name="index">local value lable</param>
+        /// <returns></returns>
         public string Get_LV(string index)
         {
             if (index == "VAL0")
@@ -87,11 +92,7 @@ namespace LocalRunFunc
             }
             else if (index == "ADDR")
             {
-                if (_logic.ischange_addr)
-                {
-                    return _logic.address;
-                }
-                
+                return _logic.address;
             }
             return "";
         }
@@ -204,24 +205,31 @@ namespace LocalRunFunc
         {
             //operate parse
             //this._logic = logic;
+            string frame_len = "";
+
+
             MatchCollection len_match = Regex.Matches(frame, @"LEN\((?<valopt>.*?)\)", RegexOptions.ExplicitCapture);
-            string frame_len = Util.byteToString(reg_calclen(len_match[0].Groups["valopt"].Value));
+            if (len_match.Count != 0)
+            {
+                frame_len = Util.byteToString(reg_calclen(len_match[0].Groups["valopt"].Value));
+            }
+
             //replace parse
             var frame_pattern = new string[][] { 
-            new string[]{@"(\[BG\])","68"},
-            new string[]{@"(\[ED\])","16"},
-            new string[]{@"(\[ADDR\])",Get_LV("ADDR")},
-            new string[]{@"(\[VAL0\])",Get_LV("VAL0")}, 
-            new string[]{@"(\[VAL1\])",Get_LV("VAL1")}, 
-            new string[]{@"(\[VAL2\])",Get_LV("VAL2")}, 
-            new string[]{@"(\[VAL3\])",Get_LV("VAL3")}, 
-            new string[]{@"(\[VAL4\])",Get_LV("VAL4")}, 
-            new string[]{@"(\[VAL5\])",Get_LV("VAL5")}, 
-            new string[]{@"(\[VAL6\])",Get_LV("VAL6")}, 
-            new string[]{@"(\[VAL7\])",Get_LV("VAL7")}, 
-            new string[]{@"(\[VAL8\])",Get_LV("VAL8")}, 
-            new string[]{@"(\[VAL9\])",Get_LV("VAL9")}, 
-            new string[]{@"(\[LEN.*?\])",frame_len},
+                new string[]{@"(\[BG\])","68"},
+                new string[]{@"(\[ED\])","16"},
+                new string[]{@"(\[ADDR\])",Get_LV("ADDR")},
+                new string[]{@"(\[VAL0\])",Get_LV("VAL0")}, 
+                new string[]{@"(\[VAL1\])",Get_LV("VAL1")}, 
+                new string[]{@"(\[VAL2\])",Get_LV("VAL2")}, 
+                new string[]{@"(\[VAL3\])",Get_LV("VAL3")}, 
+                new string[]{@"(\[VAL4\])",Get_LV("VAL4")}, 
+                new string[]{@"(\[VAL5\])",Get_LV("VAL5")}, 
+                new string[]{@"(\[VAL6\])",Get_LV("VAL6")}, 
+                new string[]{@"(\[VAL7\])",Get_LV("VAL7")}, 
+                new string[]{@"(\[VAL8\])",Get_LV("VAL8")}, 
+                new string[]{@"(\[VAL9\])",Get_LV("VAL9")}, 
+                new string[]{@"(\[LEN.*?\])",frame_len},
             };
             string pframe = frame;
             foreach (var s in frame_pattern)

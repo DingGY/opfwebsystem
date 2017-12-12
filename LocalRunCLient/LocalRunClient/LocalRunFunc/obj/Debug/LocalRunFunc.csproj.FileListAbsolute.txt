@@ -2,3 +2,4 @@ E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunFunc\bin\Debu
 E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunFunc\bin\Debug\LocalRunFunc.pdb
 E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunFunc\obj\Debug\LocalRunFunc.dll
 E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunFunc\obj\Debug\LocalRunFunc.pdb
+E:\项目\python\web_project\LocalRunCLient\LocalRunClient\LocalRunFunc\obj\Debug\LocalRunFunc.csprojResolveAssemblyReference.cache

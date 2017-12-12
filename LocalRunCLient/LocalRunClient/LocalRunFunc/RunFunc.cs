@@ -141,19 +141,18 @@ namespace LocalRunFunc
         {
             
             string frame_send = "";
+            if (!_logic.ischange_addr)
+            {
+                _logic.address = _retVal.address;
+            }
             var frameInterpreter = new FrameParse(_logic);
             if (_logic.isFE_begin)
             {
                 frame_send = "FEFEFEFE";
             }
-            if (!_logic.ischange_addr)
-            {
-                _logic.address = _retVal.address;
-            }
-            frame_send += _logic.frame_set;
             try
             {
-                frame_send = frameInterpreter.parse_frame(frame_send);
+                frame_send += frameInterpreter.parse_frame(_logic.frame_set);
                 Console.WriteLine(frame_send);
                 byte[] frame_sdbyte = Util.stringToByteArray(frame_send);
                 if (!_ComPort.IsOpen)
@@ -161,7 +160,6 @@ namespace LocalRunFunc
                     _ComPort.Open();
                 }
                 _ComPort.Write(frame_sdbyte, 0, frame_sdbyte.Length);
-                
             }
             catch (System.Exception ex)
             {
@@ -189,9 +187,106 @@ namespace LocalRunFunc
                 return false;
             }
             UpdateUI(
-                string.Format("{0}：{1}\n", logic.name,frame_read.getNoTagData),
+                string.Format("{0}：{1}\n", logic.display_msg,frame_read.getNoTagData),
                 Color.Green
                 );
+            return true;
+        }
+        /// <summary>
+        /// read data from serial
+        /// </summary>
+        /// <param name="logic">task logic</param>
+        /// <returns></returns>
+        public bool read_addr(Logic logic)
+        {
+            this._logic = logic;
+            UpdateUI(
+                string.Format("正在执行：{0}\n", logic.name),
+                Color.Green
+                );
+            comWrite();
+            var frame_read = comRead();
+            if (!frame_read.isFinish)
+            {
+                return false;
+            }
+            _retVal.address = frame_read.address;
+            UpdateUI(
+                string.Format("{0}：{1}\n", logic.display_msg, frame_read.address),
+                Color.Green
+                );
+            return true;
+        }
+        /// <summary>
+        /// read data from serial
+        /// </summary>
+        /// <param name="logic">task logic</param>
+        /// <returns></returns>
+        public bool cmp_data(Logic logic)
+        {
+            this._logic = logic;
+            UpdateUI(
+                string.Format("正在执行：{0}\n", logic.name),
+                Color.Green
+                );
+            comWrite();
+            var frame_read = comRead();
+            if (!frame_read.isFinish)
+            {
+                return false;
+            }
+            UpdateUI(
+                string.Format("{0}：{1}\n", logic.display_msg, frame_read.getNoTagData),
+                Color.Green
+                );
+            if (logic.val1 == frame_read.getNoTagData)
+            {
+                _retVal.cmpStatus = true;
+                UpdateUI(
+                    string.Format("匹配 {0}：{1}\n", logic.name, logic.display_msg),
+                    Color.Green
+                );
+            }
+            else
+            {
+                _retVal.cmpStatus = false;
+                UpdateUI(
+                    string.Format("不匹配 {0}：{1}\n", logic.name, logic.display_msg),
+                    Color.Red
+                );
+            }
+            return _retVal.cmpStatus;
+        }
+        /// <summary>
+        /// read data from serial
+        /// </summary>
+        /// <param name="logic">task logic</param>
+        /// <returns></returns>
+        public bool set_data(Logic logic)
+        {
+            this._logic = logic;
+            UpdateUI(
+                string.Format("正在执行：{0}\n", logic.name),
+                Color.Green
+                );
+            comWrite();
+            var frame_read = comRead();
+            if (!frame_read.isFinish)
+            {
+                return false;
+            }
+            UpdateUI(
+                string.Format("{0}：{1}\n", logic.display_msg, frame_read.getNoTagData),
+                Color.Green
+                );
+            if (logic.val1 == frame_read.getNoTagData)
+            {
+                _retVal.cmpStatus = true;
+                UpdateUI(
+                    string.Format("匹配 {0}：{1}\n", logic.name, logic.display_msg),
+                    Color.Green
+                );
+            }
             return _retVal.cmpStatus;
         }
     }
