@@ -12,29 +12,97 @@
 
     <!-- navigation bar -->
     {% include 'nav_base.html' %}
+
+    </div>
     <div class="raw">
         <div class="col-xs-2">
-            <div class="list-group">
-                <a href="#" class="list-group-item"><font size=4>简介</font></a>
-                <a href="#" class="list-group-item"><font size=4>例子</font></a>
-                <a href="#" class="list-group-item"><font size=4>方法</font></a>
-                <a href="#" class="list-group-item"><font size=4>步骤</font></a>
-                <a href="#" class="list-group-item"><font size=4>任务</font></a>
-                <a href="#" class="list-group-item"><font size=4>练习</font></a>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="list-group" id="help-item-list">
+                <a href="#help-introduction" class="list-group-item">
+                    <font size=4>简介</font>
+                </a>
+                <a href="#help-example" class="list-group-item">
+                    <font size=4>例子</font>
+                </a>
+                <a href="#" class="list-group-item">
+                    <font size=4>方法</font>
+                </a>
+                <a href="#" class="list-group-item">
+                    <font size=4>步骤</font>
+                </a>
+                <a href="#" class="list-group-item">
+                    <font size=4>任务</font>
+                </a>
+                <a href="#" class="list-group-item">
+                    <font size=4>练习</font>
+                </a>
             </div>
         </div>
         <div class="col-xs-10">
-
+            <div class="page-header">
+                <h1>
+                    电表测试系统
+                    <small>使用说明</small>
+                </h1>
+            </div>
+            <div class="raw">
+                <div class="col-xs-10">
+                    <h2 id="help-introduction"> 是什么</h2>
+                    <br>
+                    <div class="bugmanage-help-text">
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp; 先说一下做这套系统的初衷和想法， 曾经出现过一个BUG，按帧序号发送一组帧给电表， 如果这组帧中某一个帧的序号错误，电表收到这样的帧后会死机， 但要想重现这个问题，现有的电表测试软件都无法构建这样的一组问题帧，因为这些软件组帧发送等逻辑都是固定的不够灵活只能发送国网规范的帧，
+                                然而这组帧不符合国网功能规范，所以只能手动组帧，手动计算CS校验位，手动用串口助手将这一组帧一条一条的发送给电表，但要想重复实现， 就还需要把之前繁琐的步骤在重复一遍，这给电表测试任务带来极大的不便，所以部门经理让我
+                                做一款灵活的、逻辑可存储的、可共享的、由用户权限的电表测试系统。联想到平时生产的上位机软件逻辑与此类似，并且稍有逻辑变动就需要更改源码， 故决定做一套能满足各种645，698组帧需要，且扩展性强的电表测试系统。
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp; 电表测试系统可以允许你通过自定义方法、步骤、任务来进行个性化任务设置，在设置好任务时，通过本地客户端加载服务器上的任务方案 然后连接好电表的串口就可以进行电表任务测试，同时本地客户端还可以将测试的结果返回给服务器进行分析。
+                                其中在组帧时可以使用本系统自带的Faf (framing any frame)组帧语言，Faf为用户提供了强大、方便、灵活的组帧方式，能迅速的灵活构建任意电表帧。
+                            </font>
+                        </p>
+                    </div>
+                    <h2 id="help-example"> 例子</h2>
+                    <br>
+                    <div class="bugmanage-help-text">
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;下面以一个修改的例子来做说明：
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;先想一下要完成的任务步骤
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.读取电表的地址
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+                            </font>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
     <script src="/static/jquery-1.9.1.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/jquery.cookie.js"></script>
-    <script src="/static/bug_index.js"></script>
+    <script src="/static/bug_help.js"></script>
     <script>
-        window.onload = bug_index_init;
+        window.onload = bug_help_init;
     </script>
 </body>
 

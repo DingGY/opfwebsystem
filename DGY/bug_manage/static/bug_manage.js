@@ -89,7 +89,10 @@ function add_step_list_item(head, text, num) {
         '</div>';
     StepDic[num] = step_item;
 }
-
+function clear_step_list_view(){
+    $('#show-task-every-step').find('.panel').children().remove();
+    StepDic = {};
+}
 //add the new list for the task
 function flash_step_list_view(clearflag) {
     $('#show-task-every-step').find('.panel').children().remove();
@@ -291,6 +294,7 @@ function showTaskInfo(e) {
         },
         function (data, status) {
             if (data != "not found") {
+                clear_step_list_view();
                 setTaskInfo(data);
             }
         }

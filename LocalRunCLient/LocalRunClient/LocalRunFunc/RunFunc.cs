@@ -276,17 +276,10 @@ namespace LocalRunFunc
                 return false;
             }
             UpdateUI(
-                string.Format("{0}：{1}\n", logic.display_msg, frame_read.getNoTagData),
+                string.Format("{0}\n", logic.display_msg),
                 Color.Green
                 );
-            if (logic.val1 == frame_read.getNoTagData)
-            {
-                _retVal.cmpStatus = true;
-                UpdateUI(
-                    string.Format("匹配 {0}：{1}\n", logic.name, logic.display_msg),
-                    Color.Green
-                );
-            }
+            _retVal.cmpStatus = true;
             return _retVal.cmpStatus;
         }
     }

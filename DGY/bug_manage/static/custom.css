@@ -75,4 +75,8 @@
     margin-right:10px;
     background-color: rgba(84, 85, 82, 0.384);
     overflow: auto;
-}   
+}
+.bugmanage-help-text{
+    line-height:220%;
+    letter-spacing:3px;
+}

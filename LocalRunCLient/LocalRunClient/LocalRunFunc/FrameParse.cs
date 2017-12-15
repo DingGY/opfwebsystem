@@ -92,7 +92,9 @@ namespace LocalRunFunc
             }
             else if (index == "ADDR")
             {
-                return _logic.address;
+                byte[] b = Util.stringToByteArray(_logic.address);
+                Array.Reverse(b);
+                return Util.byteArrayToString(b,b.Length);
             }
             return "";
         }
