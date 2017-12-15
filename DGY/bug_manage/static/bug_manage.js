@@ -138,6 +138,7 @@ function getStepInfo() {
         addr_useflag = "True";
     }
     var step_info = {
+        id:$.cookie()['step'],
         name: $('#step-name').val(),
         ischange_addr: addr_useflag,
         address: $('#step-address').val(),
@@ -339,6 +340,7 @@ function changeTask() {
     ajaxPostComm(
         "/ajax/task/change/",
         {
+            id:$.cookie()['task'],
             name: $('#task-input-name').val(),
             founder: $('#task-input-founder').val(),
             msg: $('#task-message-text').val(),
@@ -347,7 +349,7 @@ function changeTask() {
             if (data == "changed") {
                 alert_msg('修改', '成功', 'show-task-msg-text', 'success');
             }
-            if (data == "not found") {
+            if (data == "not add task") {
                 alert_msg('修改', '未找到' + task_name, 'show-task-msg-text', 'danger');
             }
         }
@@ -356,6 +358,7 @@ function changeTask() {
 
 function getFuncInfo() {
     var data = {
+        id:$.cookie()['func'],
         name: $('#func-input-name').val(),
         func_id: $('#func-input-id').val(),
         msg: $('#func-message-text').val(),

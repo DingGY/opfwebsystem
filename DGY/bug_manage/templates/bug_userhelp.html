@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>bug manage</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/custom.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- navigation bar -->
+    {% include 'nav_base.html' %}
+    <div class="raw">
+        <div class="col-xs-2">
+            <div class="list-group">
+                <a href="#" class="list-group-item"><font size=4>简介</font></a>
+                <a href="#" class="list-group-item"><font size=4>例子</font></a>
+                <a href="#" class="list-group-item"><font size=4>方法</font></a>
+                <a href="#" class="list-group-item"><font size=4>步骤</font></a>
+                <a href="#" class="list-group-item"><font size=4>任务</font></a>
+                <a href="#" class="list-group-item"><font size=4>练习</font></a>
+            </div>
+        </div>
+        <div class="col-xs-10">
+
+        </div>
+    </div>
+
+
+    <script src="/static/jquery-1.9.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script src="/static/bug_index.js"></script>
+    <script>
+        window.onload = bug_index_init;
+    </script>
+</body>
+
+</html>

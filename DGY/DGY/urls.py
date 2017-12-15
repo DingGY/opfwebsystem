@@ -16,18 +16,22 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from bug_manage.views import *
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test/$', test),
     url(r'^login/$', login_view),
-    url(r'^login/check/$', login_check),
     url(r'^websocket/webcomm/$', web_comm),
     url(r'^bug_manage/index/$', boot),
     url(r'^bug_manage/manage/$', bug_manage),
+    url(r'^bug_manage/userhelp/$', bug_help),
     url(r'^localclient/$', local_client),
     url(r'^ajax/set_config/$', set_config),
     url(r'^ajax/step/(.+)/$', step_action),
     url(r'^ajax/task/(.+)/$', task_action),
+    url(r'^ajax/check/$', login_check),
+    url(r'^ajax/signup/$', login_signup),
     url(r'^ajax/func/(.+)/$', func_action),
     url(r'^ajax/index/get_task/$', get_task_info),
 ]

@@ -3,6 +3,8 @@ from django.http import *
 from django.views.decorators.csrf import *
 from django.shortcuts import render
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import *
 import sys
 import json
 import time
@@ -18,6 +20,7 @@ from django.shortcuts import render_to_response
 from django import template
 from dwebsocket.decorators import *
 import json
+from django.contrib.auth import authenticate, login
 # Static value
 
 
@@ -47,18 +50,45 @@ def test(request):
     else:
         pass
 
-
+@ensure_csrf_cookie
 def login_view(request):
     return render_to_response("bug_login.html")
 
+@login_required(login_url='/login/')
+def bug_help(request):
+    return render_to_response("bug_userhelp.html")
 
 def login_check(request):
-    username = request.GET['username']
-    password = request.GET['password']
-    resp = HttpResponseRedirect("/bug_manage/index/")
-    resp.set_cookie("username", username)
-    resp.set_cookie("password", password)
-    return resp
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponse("signined")
+        else:
+            return HttpResponse("not active")
+    else:
+        return HttpResponse("username error")
+
+
+def login_signup(request):
+    try:
+        username = request.POST['username']
+        realname = request.POST['realname']
+        password = request.POST['password']
+        email = request.POST['email']
+        applypasswd = request.POST['applypasswd']
+        if applypasswd == "191316281":
+            print(username)
+            user = User.objects.create_user(username,email,password)
+            user.last_name = realname
+            user.save()
+            return HttpResponse("signuped")
+        else:
+            return HttpResponse("error applypasswd")
+    except:
+        return HttpResponse("not finished")
 
 
 @require_websocket
@@ -80,7 +110,7 @@ def web_comm(request):
     
     return
 
-
+@login_required(login_url='/login/')
 def boot(request):
     resp = render_to_response('bug_index.html')
     task_list = Task.objects.all()
@@ -89,7 +119,7 @@ def boot(request):
     } 
     return render_to_response('bug_index.html',context)
 
-
+@login_required(login_url='/login/')
 @ensure_csrf_cookie
 def bug_manage(request):
     bug_list = Task.objects.all()
@@ -132,6 +162,9 @@ def step_action(request, action):
             func = FuncMessage.objects.get(id=int(request.POST['act_id']))
         except:
             return HttpResponse("not add new logic or select func") 
+    elif action == "change":
+        step_id = int(request.POST['id'])
+        logic = Logic.objects.get(id__exact=step_id)
     else:
         step_name = request.POST['name']
         logic_list = Logic.objects.filter(name__exact=step_name)
@@ -180,28 +213,26 @@ def step_action(request, action):
             logic_list[0].delete()  
             return HttpResponse("deleted")
     elif action == 'change':
-        if len(logic_list) != 0:
-            logic = logic_list[0]
-            logic.name=request.POST['name']
-            logic.address=request.POST['address']
-            logic.ischange_addr=request.POST['ischange_addr']
-            logic.isFE_begin=request.POST['isFE_begin']
-            logic.send_delay=request.POST['send_delay']
-            logic.read_delay=request.POST['read_delay']
-            #logic.func=FuncMessage.objects.get(func_id=request.POST['func_id']) 
-            logic.display_msg=request.POST['display_msg']
-            logic.val0=request.POST['val0']
-            logic.val1=request.POST['val1']
-            logic.val2=request.POST['val2']
-            logic.val3=request.POST['val3']
-            logic.val4=request.POST['val4']
-            logic.val5=request.POST['val5']
-            logic.val6=request.POST['val6']
-            logic.val7=request.POST['val7']
-            logic.val8=request.POST['val8']
-            logic.val9=request.POST['val9']
-            logic.save()
-            return HttpResponse("changed")
+        logic.name=request.POST['name']
+        logic.address=request.POST['address']
+        logic.ischange_addr=request.POST['ischange_addr']
+        logic.isFE_begin=request.POST['isFE_begin']
+        logic.send_delay=request.POST['send_delay']
+        logic.read_delay=request.POST['read_delay']
+        #logic.func=FuncMessage.objects.get(func_id=request.POST['func_id']) 
+        logic.display_msg=request.POST['display_msg']
+        logic.val0=request.POST['val0']
+        logic.val1=request.POST['val1']
+        logic.val2=request.POST['val2']
+        logic.val3=request.POST['val3']
+        logic.val4=request.POST['val4']
+        logic.val5=request.POST['val5']
+        logic.val6=request.POST['val6']
+        logic.val7=request.POST['val7']
+        logic.val8=request.POST['val8']
+        logic.val9=request.POST['val9']
+        logic.save()
+        return HttpResponse("changed")
     elif action == 'addfunc':
         logic.func = func
         logic.save()
@@ -220,7 +251,6 @@ def get_task_step(task):
         step_dic["step_head"] = step.act.name
         step_dic["step_text"] = step.act.display_msg
         logic_list.append(step_dic)
-        print(step.num)
     return logic_list
 def get_step_info(step):
     step_dic={}
@@ -229,9 +259,15 @@ def get_step_info(step):
     step_dic["step_text"] = step.act.display_msg
     return step_dic
 def task_action(request, action):
-    if action != 'addstep' and action != 'delstep' and action != 'changestep':
+    if action == 'change' or action == 'addstep' or action == 'delstep' or action == 'changestep':
+        try:
+            task = Task.objects.get(id=int(request.POST['id']))
+        except:
+            return HttpResponse("not add task")
+    else:
         task_name = request.POST['name']
         task_list = Task.objects.filter(name__exact=task_name)
+    
     if action == 'get':
         task = task_list[0]
         task_dic = task_list.values()[0]
@@ -257,18 +293,12 @@ def task_action(request, action):
             task_list[0].delete()
             return HttpResponse("deleted")
     elif action == 'change':
-        if len(task_list) != 0:
-            task = task_list[0]
-            task.founder=request.POST['founder']
-            task.name=task_name
-            task.msg=request.POST['msg']
-            task.save()
-            return HttpResponse('changed')
+        task.founder=request.POST['founder']
+        task.name=request.POST['name']
+        task.msg=request.POST['msg']
+        task.save()
+        return HttpResponse('changed')
     elif action == 'addstep':
-        try:
-            task = Task.objects.get(id=int(request.POST['id']))
-        except:
-            return HttpResponse("not add task")
         if len(task.step.filter(num=int(request.POST['num']))) != 0:
             return HttpResponse('same num')
         task_step = StepAction(
@@ -280,27 +310,27 @@ def task_action(request, action):
         task.save()
         return HttpResponse(json.dumps(get_step_info(task_step)))
     elif action == 'delstep':
-        task = Task.objects.get(id=int(request.POST['id']))
         step_action = StepAction.objects.get(num=int(request.POST['step_num']))
         task.step.remove(step_action)
         step_action.delete()
         return HttpResponse("deleted")
     elif action == 'changestep':
-        task = Task.objects.get(id=int(request.POST['id']))
         step_list = task.step.filter(num=int(request.POST['step_change_num']))
         if len(step_list) == 0:
             act_step = task.step.get(num=int(request.POST['step_num']))
             act_step.num = int(request.POST['step_change_num'])
             act_step.save()
-            print(json.dumps(get_task_step(task)))
             return HttpResponse(json.dumps(get_task_step(task)))
     else:
         return HttpResponse("task_action failed")
     return HttpResponse("not found")
 
 def func_action(request, action):
-    func_name = request.POST['name']
-    func_list = FuncMessage.objects.filter(name__exact=func_name)
+    if action == 'change':
+            func = FuncMessage.objects.get(id__exact=int(request.POST['id']))
+    else:
+        func_name = request.POST['name']
+        func_list = FuncMessage.objects.filter(name__exact=func_name)
     if action == 'get':
         func = func_list[0]
         func_dic = func_list.values()[0]
@@ -327,14 +357,12 @@ def func_action(request, action):
             func_list[0].delete()
             return HttpResponse("deleted")
     elif action == 'change':
-        if len(func_list) != 0:
-            func = func_list[0]
-            func.name = func_name
-            func.func_id=request.POST['func_id']
-            func.msg=request.POST['msg']
-            func.frame_set=request.POST['frame_set']
-            func.save()
-            return HttpResponse("changed")
+        func.name = request.POST['name']
+        func.func_id=request.POST['func_id']
+        func.msg=request.POST['msg']
+        func.frame_set=request.POST['frame_set']
+        func.save()
+        return HttpResponse("changed")
     else:
         return HttpResponse("task_action failed")
     return HttpResponse("not found")
