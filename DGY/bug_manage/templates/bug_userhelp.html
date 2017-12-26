@@ -29,18 +29,23 @@
                 <a href="#help-example" class="list-group-item">
                     <font size=4>例子</font>
                 </a>
-                <a href="#" class="list-group-item">
-                    <font size=4>方法</font>
-                </a>
-                <a href="#" class="list-group-item">
-                    <font size=4>步骤</font>
-                </a>
-                <a href="#" class="list-group-item">
+
+                <a href="#help-mission" class="list-group-item">
                     <font size=4>任务</font>
                 </a>
-                <a href="#" class="list-group-item">
-                    <font size=4>练习</font>
+
+                <a href="#help-step" class="list-group-item">
+                    <font size=4>步骤</font>
                 </a>
+                <a href="#help-function" class="list-group-item">
+                    <font size=4>方法</font>
+                </a>
+                <a href="#help-Faf" class="list-group-item">
+                    <font size=4>Faf</font>
+                </a>
+                <!-- <a href="#" class="list-group-item">
+                    <font size=4>练习</font>
+                </a> -->
             </div>
         </div>
         <div class="col-xs-10">
@@ -68,13 +73,11 @@
                                 其中在组帧时可以使用本系统自带的Faf (framing any frame)组帧语言，Faf为用户提供了强大、方便、灵活的组帧方式，能迅速的灵活构建任意电表帧。
                             </font>
                         </p>
-                    </div>
-                    <h2 id="help-example"> 例子</h2>
-                    <br>
-                    <div class="bugmanage-help-text">
+                        <h2 id="help-example"> 例子</h2>
+                        <br>
                         <p>
                             <font size=4>
-                                &nbsp;&nbsp;&nbsp;&nbsp;下面以一个修改的例子来做说明：
+                                &nbsp;&nbsp;&nbsp;&nbsp;下面以一个02级密码进入场内修改3318表地址的例子来做说明：
                             </font>
                         </p>
                         <p>
@@ -89,7 +92,288 @@
                         </p>
                         <p>
                             <font size=4>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.进入厂内
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.使用02级密码修改备案号
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.比对备案信息
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;接下来我们来实现各个步骤
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;1.读取表地址：
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录192.168.13.50，点击任务管理再点击左菜单栏的任务
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example1.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;添加新任务后，选中新添加的任务，并选择步骤里的读取基地址步骤，在任务设置里设置好步骤序号后进行添加
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example2.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <img src="/static/img/example3.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;2.进入厂内：
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择3318进入场内的步骤进行添加
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example4.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <img src="/static/img/example5.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;3.使用02级密码修改备案号
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在步骤中找到02级密码修改备案号这一栏，设置VAL3为要修改的表号这里为222222222222222222。（具体为啥为VAL3请查看后面方法设置说明）
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example6.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;添加此步骤到我们新建的任务
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example7.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;4.比对备案信息
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在步骤中找到比对备案信息这一栏，设置VAL1为要比对的表号这里为222222222222222222。
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example8.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;设置完步骤后在任务里添加此步骤
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example9.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;5.在客户端运行任务
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;打开客户端程序，设置好串口号和方案等
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example10.png" width="900" height="500">
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;回车运行任务
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example11.png" width="900" height="500">
+                        </p>
+                        <h2 id="help-mission"> 任务</h2>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;任务在BUG管理系统中起着口袋的作用，是测试流程的对象，也可以说是步骤的集合。我们可以将各种步骤添加到任务中， 然后在本地的客户端加载我们设置好的任务并运行测试。
+                            </font>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;在设置任务时，我们先在左边的步骤中选中我们要添加的步骤，然后在任务设置栏里设置步骤序号，步骤序号就是步骤执行的顺序，在任务执行的时候，会按步骤序号从小到大依次执行（步骤序号不能重复）。 在向任务添加步骤时，如果添加成功会在右边显示当前任务的的所有已添加的步骤。添加好步骤后，如果想修改步骤序号还可以在右边单击需要修改的步骤进行修改（注意不能重复）
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example12.png" width="900" height="500">
+                        </p>
+                        <h2 id="help-step"> 步骤</h2>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;步骤可以简单的理解为任务执行时的单步操作，而任务是多步操作的集合。步骤对于方法来说就像是方法的外衣，实现设置方法执行时的各项具体参数。 关于步骤菜单的具体的说明可以参考下图。
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example13.png" width="900" height="700">
+                        </p>
+                        <h2 id="help-function"> 方法</h2>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;方法为客户端具体执行的逻辑框架，是BUG测试系统里最底层的元素。在方法中有动作id,在这里可以设置客户端的逻辑，在方法里必须要用Faf（帧格式设置语言）设置松松真的格式，遮掩就可以用设置好的逻辑来解析发送帧。
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/example14.png" width="700" height="400">
+                        </p>
+
+                        <h3>&nbsp;&nbsp;&nbsp;&nbsp;动作id:</h3>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;动作id是指客户端在执行包含此方法的步骤时所执行的逻辑，动作id是固定的事先编辑好写在客户端里的逻辑（包括读写，比对，设置地址等逻辑），测试者在为方法选定动作id时需要查看
+                                <a href="#id-func-document">动作id手册</a>来选择适当的id。
+                            </font>
+                        </p>
+                        <h3 id="id-func-document">&nbsp;&nbsp;&nbsp;&nbsp;动作id手册:</h3>
+                        <br>
+                        <h4>&nbsp;&nbsp;&nbsp;&nbsp;read_data</h4>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;read_data的作用是将Faf的帧解析后发送给电表，然后再接收电表返回的数据，并显示电表读取的结果。
+                            </font>
+                        </p>
+                        <p>
+                            <img src="/static/img/doc1.png" width="579" height="678">
+                        </p>
+                        <br>
+                        <h4>&nbsp;&nbsp;&nbsp;&nbsp;read_addr</h4>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;read_addr的作用是将Faf的帧解析后发送给电表读取地址，然后再接收电表返回的地址数据，并修改当前步骤的地址以供后续步骤使用。
+                            </font>
+                            <p>
+                                <img src="/static/img/doc2.png" width="579" height="678">
+                            </p>
+                        </p>
+                        <br>
+                        <h4>&nbsp;&nbsp;&nbsp;&nbsp;cmp_data</h4>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;cmp_data的作用是将Faf的帧解析后发送给电表读取数据，然后再接收电表返回的数据，如果接收到了电表发送过来的数据，客户端会自动根据电表返回的数据与步骤的VAL1变量做比对，比对后会显示比对的结果，同时记录当前步骤的状态信息以供后续步骤使用。
+                            </font>
+                            <p>
+                                <img src="/static/img/doc3.png" width="579" height="978">
+                            </p>
+                        </p>
+                        <br>
+                        <h4>&nbsp;&nbsp;&nbsp;&nbsp;set_data</h4>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;set_data的作用是将Faf的帧解析后发送给电表设置数据，然后再接收电表返回的设置结果，同时记录当前步骤的状态信息以供后续步骤使用。设置的内容以及需要设置的数据由方法的Faf表示。
+                            </font>
+                            <p>
+                                <img src="/static/img/doc4.png" width="579" height="678">
+                            </p>
+                        </p>
+                        <h2 id="help-Faf"> Faf</h2>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Faf为Framing any frame的缩写，是一个专门用于电表组帧的DSL(领域专用语言)，能够方便、快速、灵活的组任何电表帧。Faf是这款系统的灵魂。Faf同一般的编程语言类似，也有变量和方法，将Faf的代码写好后，配合Faf的解析引擎能够快速编译出能用于电表通信的帧。
+                            </font>
+                        </p>
+                        <br>
+                        <h3> 变量与常量</h3>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Faf的变量是能够在步骤中设置的值,在使用时需要用方括号[]括起来。
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Faf的变量种类：
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;ADDR: 按步骤中地址设置的规则来为变量ADDR赋值
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;CS: CS变量前面所有字节的校验和的值，如果一段Faf帧中有多个CS那么Faf解析引擎将从左往右依次计算检验和，并为每个CS变量付相应的CS校验和的值。
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;VAL0~VAL9: 从VAL0到VAL9这10个变量可以再步骤中有用户自由设置。并且这10个变量能够够作为函数的参数使用。Faf引擎在解析时会简单的将这10个变量所包含的值添加到帧的相应位置。
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;常量: Faf的常量是在编译时值保持不动的字节，Faf的常量都是16进制并以字节为单位。
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;例子：68[ADDR]681104[VAL0][CS]16&nbsp;&nbsp;&nbsp;&nbsp;其中VAL0的值为11111111，在步骤中设置ADDR为全AA地址。
+                            </font>
+                        </p>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;解析时Faf引擎会将[ADDR]替换为AAAAAAAAAAAA,将[VAL0]替换为11111111，常量保持不变。此时的帧为68AAAAAAAAAAAA68110411111111[CS]16。最后Faf引擎会计算CS前面的校验码（此处为05）。所以最后的结果为68
+                                AAAAAAAAAAAA 681104 11111111 05 16
+                            </font>
+                        </p>
+                        <br>
+                        <h3> 函数</h3>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Faf的函数是用来对原始数据做指定处理的方法（如加0x33，字节反转，计算长度等）。函数在使用的格式为：[函数名（参数）]
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;DATA： DATA函数的作用是将参数按645的规则加0X33后倒叙排列用变量当参数时要加方括号[]，返回值为参数加0X33后倒叙排列的值。如[DATA([VAL0][VAL1])]其中VAL0=0000,VAL1=11，则此函数返回的值为：443333。
+                            </font>
+                        </p>
+                        <br>
+                        <p>
+                            <font size=4>
+                                &nbsp;&nbsp;&nbsp;&nbsp;LEN： LEN函数的作用是按字节来计算参数的长度，返回值是以一个字节来表示的16进制长度值，用变量当参数时
+                                <a>不需要</a>加方括号[]。如[LEN(VAL0+VAL1)]其中VAL0=0000,VAL1=11，LEN函数会先按字节计算VAL0的长度为2，然后在计算VAL1的长度为1，最后两者相加，函数返回3。同理如果是[LEN(VAL0-VAL1)]其中VAL0=0000,VAL1=11那么函数会用VAL0的长度减去VAL1的长度，结果为1。
                             </font>
                         </p>
                     </div>
