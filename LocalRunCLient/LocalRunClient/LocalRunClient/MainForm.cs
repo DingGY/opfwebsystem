@@ -37,6 +37,7 @@ namespace LocalRunClient
             comList.Add(new SerialPort());
             comList.Add(new SerialPort());
             UIDisplay = new UIfunc(UpdateUI_Handle);
+
         }
 
 
@@ -56,6 +57,9 @@ namespace LocalRunClient
             showInfoBoxList[index].SelectionFont = new Font("宋体", 15, FontStyle.Bold);
             showInfoBoxList[index].SelectionColor = colr;
             showInfoBoxList[index].SelectedText = text;
+            showInfoBoxList[index].Focus();
+            showInfoBoxList[index].Select(showInfoBoxList[0].TextLength, 0);
+            showInfoBoxList[index].ScrollToCaret();
         }
         public void setRichText(string text,Color colr,int index)
         {
@@ -78,7 +82,10 @@ namespace LocalRunClient
             foreach (Logic logic in task.logic_list)
             {
                 MethodInfo logicFunc = runFunc.GetType().GetMethod(logic.func);
-                logicFunc.Invoke(runFunc, new object[] { logic });
+                if (!(bool)(logicFunc.Invoke(runFunc, new object[] { logic })))
+                {
+                    break;
+                }
             }
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)

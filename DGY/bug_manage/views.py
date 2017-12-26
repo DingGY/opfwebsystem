@@ -120,6 +120,10 @@ def boot(request):
     return render_to_response('bug_index.html',context)
 
 @login_required(login_url='/login/')
+def bug_download(request):
+    return render_to_response('bug_download.html')
+
+@login_required(login_url='/login/')
 @ensure_csrf_cookie
 def bug_manage(request):
     bug_list = Task.objects.all()

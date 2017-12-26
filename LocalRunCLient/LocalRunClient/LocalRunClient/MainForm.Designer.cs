@@ -67,9 +67,9 @@
             // richTextBox1
             // 
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Enabled = false;
             this.richTextBox1.Location = new System.Drawing.Point(3, 42);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(263, 346);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
@@ -80,6 +80,7 @@
             this.richTextBox2.Enabled = false;
             this.richTextBox2.Location = new System.Drawing.Point(272, 42);
             this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
             this.richTextBox2.Size = new System.Drawing.Size(263, 346);
             this.richTextBox2.TabIndex = 1;
             this.richTextBox2.Text = "";
@@ -90,6 +91,7 @@
             this.richTextBox3.Enabled = false;
             this.richTextBox3.Location = new System.Drawing.Point(541, 42);
             this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.ReadOnly = true;
             this.richTextBox3.Size = new System.Drawing.Size(264, 346);
             this.richTextBox3.TabIndex = 2;
             this.richTextBox3.Text = "";
