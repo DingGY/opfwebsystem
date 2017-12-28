@@ -112,12 +112,14 @@ def web_comm(request):
 
 @login_required(login_url='/login/')
 def boot(request):
-    resp = render_to_response('bug_index.html')
-    task_list = Task.objects.all()
-    context = {
-        'task_list':task_list
-    } 
-    return render_to_response('bug_index.html',context)
+    # resp = render_to_response('bug_index.html')
+    # task_list = Task.objects.all()
+    # context = {
+    #     'task_list':task_list
+    # } 
+    # return render_to_response('bug_index.html',context)
+    print("hello")
+    return render_to_response('bug_mainpage.html')
 
 @login_required(login_url='/login/')
 def bug_download(request):

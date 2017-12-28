@@ -21,6 +21,7 @@ namespace LocalRunClient
              MainForm.clientConfig.url = urlSetBox.Text;
              MainForm.clientConfig.encryptionIP = encryptionIPText.Text;
              MainForm.clientConfig.encryptionPort = encryptionPortText.Text;
+             MainForm.clientConfig.SaveConfig();
              this.Close();
         }
         private void UrlConfig_Load(object sender, EventArgs e)

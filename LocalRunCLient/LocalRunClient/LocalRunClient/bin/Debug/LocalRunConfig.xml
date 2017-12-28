@@ -13,5 +13,7 @@
     <dataBits>8</dataBits>
     <clockNum>0</clockNum>
   </comPortConfig>
-  <url>http://127.0.0.1:8000/localclient/</url>
+  <url>http://192.168.13.215:1221/localclient/</url>
+  <encryptionIP />
+  <encryptionPort />
 </CONFIG>
