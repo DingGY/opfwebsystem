@@ -118,7 +118,6 @@ def boot(request):
     #     'task_list':task_list
     # } 
     # return render_to_response('bug_index.html',context)
-    print("hello")
     return render_to_response('bug_mainpage.html')
 
 @login_required(login_url='/login/')

@@ -19,7 +19,9 @@ from bug_manage.views import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    
     url(r'^admin/', admin.site.urls),
+    url(r'^$', login_view),
     url(r'^test/$', test),
     url(r'^login/$', login_view),
     url(r'^websocket/webcomm/$', web_comm),

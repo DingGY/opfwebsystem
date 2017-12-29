@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>bug manage</title>
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/custom.css" rel="stylesheet">
+    {% include 'head.html' %}
 </head>
 
 <body>
@@ -18,105 +15,106 @@
     <br>
     <br>
     <br>
-    <div class="raw">
-        <div class="col-xs-3 col-xs-offset-4">
-            <ul class="nav nav-pills nav-justified" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#sign-in" aria-controls="sign-in" role="tab" data-toggle="tab">登录</a>
-                </li>
-                <li role="presentation">
-                    <a href="#sign-up" aria-controls="sign-up" role="tab" data-toggle="tab">注册</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="sign-in">
-                    <br>
-                    <br>
-                    <form class="form-horizontal" action="/login/check/">
+    <div class="container-fluid">
+        <div class="raw">
+            <div class="col-xs-3 col-xs-offset-4">
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#sign-in" aria-controls="sign-in" role="tab" data-toggle="tab">登录</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#sign-up" aria-controls="sign-up" role="tab" data-toggle="tab">注册</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="sign-in">
+                        <br>
+                        <br>
+                        <form class="form-horizontal" action="/login/check/">
 
-                        <div class="form-group">
-                            <label for="login-username" class="col-sm-3 control-label">用户名</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="login-username" placeholder="Text" name="username">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password" class="col-sm-3 control-label">密码</label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" id="login-password" placeholder="Password" name="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> 记住我
-                                    </label>
+                            <div class="form-group">
+                                <label for="login-username" class="col-xs-3 control-label">用户名</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" id="login-username" placeholder="Text" name="username">
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" class="btn btn-default" id="login-submit">登录</button>
+                            <div class="form-group">
+                                <label for="login-password" class="col-xs-3 control-label">密码</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" id="login-password" placeholder="Password" name="password">
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="sign-up">
-                    <br>
-                    <br>
-                    <form class="form-horizontal" action="/login/signup/" id="bugmanage-signup">
-                        <div class="form-group">
-                            <label for="login-realname" class="col-sm-3 control-label">真实姓名</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="login-realname" placeholder="Text" name="realname">
+                            <div class="form-group">
+                                <div class="col-xs-offset-2 col-xs-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> 记住我
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="set-login-username" class="col-sm-3 control-label">设置用户名</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="set-login-username" placeholder="Text" name="username">
+                            <div class="form-group">
+                                <div class="col-xs-offset-2 col-xs-10">
+                                    <button type="button" class="btn btn-default" id="login-submit">登录</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="set-login-password" class="col-sm-3 control-label">设置密码</label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" id="set-login-password" placeholder="Password" name="password">
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="sign-up">
+                        <br>
+                        <br>
+                        <form class="form-horizontal" action="/login/signup/" id="bugmanage-signup">
+                            <div class="form-group">
+                                <label for="login-realname" class="col-xs-3 control-label">真实姓名</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" id="login-realname" placeholder="Text" name="realname">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="set-repeat-login-password" class="col-sm-3 control-label">密码确认</label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" id="set-repeat-login-password" placeholder="Password" name="re-password">
+                            <div class="form-group">
+                                <label for="set-login-username" class="col-xs-3 control-label">设置用户名</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" id="set-login-username" placeholder="Text" name="username">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="set-login-email" class="col-sm-3 control-label">电子邮箱</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="set-login-email" placeholder="example@qq.com" name="email">
+                            <div class="form-group">
+                                <label for="set-login-password" class="col-xs-3 control-label">设置密码</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" id="set-login-password" placeholder="Password" name="password">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-apply-passwd" class="col-sm-3 control-label">申请密码</label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" id="login-apply-passwd" placeholder="Text" name="applypasswd">
+                            <div class="form-group">
+                                <label for="set-repeat-login-password" class="col-xs-3 control-label">密码确认</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" id="set-repeat-login-password" placeholder="Password" name="re-password">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" class="btn btn-default" id="signup-submit">提交</button>
+                            <div class="form-group">
+                                <label for="set-login-email" class="col-xs-3 control-label">电子邮箱</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" id="set-login-email" placeholder="example@qq.com" name="email">
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="sign-up">
+                            <div class="form-group">
+                                <label for="login-apply-passwd" class="col-xs-3 control-label">申请密码</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" id="login-apply-passwd" placeholder="Text" name="applypasswd">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-offset-2 col-xs-10">
+                                    <button type="button" class="btn btn-default" id="signup-submit">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="sign-up">
 
+                    </div>
                 </div>
+
             </div>
-
         </div>
     </div>
-
     <script src="/static/jquery-1.9.1.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/jquery.cookie.js"></script>
