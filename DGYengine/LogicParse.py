@@ -1,7 +1,7 @@
 from ClientParse import ClientParse
 import threading,time,sys,json
 from django.forms.models import model_to_dict
-sys.path.append(r"e:\项目\python\web_project\DGY\bug_manage")
+sys.path.append("/opt/django/opfwebsystem/bug_manage")
 
 class _TaskFlow:
     def __init__(self):

@@ -1,7 +1,7 @@
-from dwebsocket.decorators import *
+from dwebsocket import *
 from django.http import *
 import sys,threading,time
-sys.path.append("e:\项目\python\web_project\DGYengine")
+sys.path.append("/opt/django/DGYengine")
 from LogicParse import  *
 from ClientParse import ClientParse
 
