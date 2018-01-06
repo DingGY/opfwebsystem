@@ -163,7 +163,7 @@ namespace LocalRunFunc
             Regex cs_match = new Regex(@"(?<csbytes>\w*?)\[CS\]");
             Regex csrep_match = new Regex(@"\[CS\]");
             string result = input;
-            Console.WriteLine(cs_match.Match(result).Groups["csbytes"].Value);
+            //Console.WriteLine(cs_match.Match(result).Groups["csbytes"].Value);
             while (cs_match.IsMatch(result))
             {
                 result = csrep_match.Replace(
@@ -203,6 +203,52 @@ namespace LocalRunFunc
             }
             return result;
         }
+        public string reg_time(string input)
+        {
+            Regex time_match = new Regex(@"\[TIME\((?<time>.*?)\)\]");
+            Regex timerep_match = new Regex(@"\[TIME\(.*?\)\]");
+            DateTime currentDateTime = DateTime.Now;
+            // 年 月 日 周
+            string year = Convert.ToString((byte)(currentDateTime.Year - 2000),10).PadLeft(2,'0');
+            string month = Convert.ToString((byte)(currentDateTime.Month), 10).PadLeft(2, '0');
+            string day = Convert.ToString((byte)(currentDateTime.Day), 10).PadLeft(2, '0');
+            string week = Convert.ToString((byte)(currentDateTime.DayOfWeek), 10).PadLeft(2, '0');
+            // 时 分 秒
+            string hour = Convert.ToString((byte)(currentDateTime.Hour), 10).PadLeft(2, '0');
+            string minute = Convert.ToString((byte)(currentDateTime.Minute), 10).PadLeft(2, '0');
+            string minuteddec = Convert.ToString((byte)(currentDateTime.Minute - 5), 10).PadLeft(2, '0');
+            string second = Convert.ToString((byte)(currentDateTime.Second), 10).PadLeft(2, '0');
+
+            var time_pattern = new string[][] { 
+                new string[]{@"(YY)",year},
+                new string[]{@"(MM)",month},
+                new string[]{@"(DD)",day},
+                new string[]{@"(WW)",week},
+                new string[]{@"(hh)",hour},
+                new string[]{@"(mm\-)",minuteddec},
+                new string[]{@"(mm)",minute},
+                new string[]{@"(ss)",second},
+
+            };
+
+            string result = input;
+
+            while (time_match.IsMatch(result))
+            {
+                string timestamp = time_match.Match(result).Groups["time"].Value;
+                foreach (var s in time_pattern)
+                {
+                    timestamp = Regex.Replace(timestamp, s[0], s[1]);
+                }
+                result = timerep_match.Replace(
+                    result,
+                    timestamp,
+                    1);
+
+            }
+            return result;
+        }
+
         public string parse_frame(string frame)
         {
             //operate parse
@@ -215,7 +261,7 @@ namespace LocalRunFunc
             {
                 frame_len = Util.byteToString(reg_calclen(len_match[0].Groups["valopt"].Value));
             }
-
+            
             //replace parse
             var frame_pattern = new string[][] { 
                 new string[]{@"(\[BG\])","68"},
@@ -238,6 +284,7 @@ namespace LocalRunFunc
             {
                 pframe = Regex.Replace(pframe, s[0], s[1]);
             }
+            pframe = reg_time(pframe);
             //add 33 byte
             pframe = reg_add33(pframe);
             //data format

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CONFIG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <comPortArr>
-    <string>COM1</string>
+    <string>COM8</string>
     <string>COM2</string>
     <string>COM3</string>
   </comPortArr>
@@ -13,7 +13,5 @@
     <dataBits>8</dataBits>
     <clockNum>0</clockNum>
   </comPortConfig>
-  <url>http://192.168.13.215:1221/localclient/</url>
-  <encryptionIP />
-  <encryptionPort />
+  <url>http://192.168.13.51/localclient/</url>
 </CONFIG>

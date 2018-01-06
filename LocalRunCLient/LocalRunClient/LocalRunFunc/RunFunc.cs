@@ -99,9 +99,17 @@ namespace LocalRunFunc
                     // 接收长度
                     //连同结束符一块接收
                     frame.len = Util.byteToString(currentData);
-                    maxReciveLength = currentData-1;
+                    maxReciveLength = currentData;
                     //maxReciveLength -= 2;
-                    the68Pos = 0x05;
+                    if (maxReciveLength == 0)
+                    {
+                        the68Pos = 6;
+                    } 
+                    else
+                    {
+                        the68Pos = 5;
+                    }
+                    
                     recvList.Add(currentData);
                 }
                 else if (the68Pos == 0x05)
@@ -109,7 +117,7 @@ namespace LocalRunFunc
                     frame.data += Util.byteToString((byte)(currentData - 0x33));
                     recvList.Add(currentData);
                     // 接收反馈数据
-                    if (maxReciveLength-- == 0)
+                    if (maxReciveLength-- == 1)
                     {
                         frame.data = Util.ReverseStrByByte(frame.data);
                         the68Pos = 0x06;
@@ -128,7 +136,7 @@ namespace LocalRunFunc
                      //end
                     recvList.Add(currentData);
                     _ComPort.Close();
-                    Thread.Sleep(_logic.read_delay);
+                    
                     frame.recv_data = Util.byteArrayToString(
                         recvList.ToArray(), recvList.ToArray().Length
                         );
@@ -155,11 +163,13 @@ namespace LocalRunFunc
                 frame_send += frameInterpreter.parse_frame(_logic.frame_set);
                 Console.WriteLine(frame_send);
                 byte[] frame_sdbyte = Util.stringToByteArray(frame_send);
+                Thread.Sleep(_logic.send_delay * 1000);
                 if (!_ComPort.IsOpen)
                 {
                     _ComPort.Open();
                 }
                 _ComPort.Write(frame_sdbyte, 0, frame_sdbyte.Length);
+                Thread.Sleep(_logic.read_delay*1000);
             }
             catch (System.Exception ex)
             {
@@ -275,6 +285,26 @@ namespace LocalRunFunc
             {
                 return false;
             }
+            UpdateUI(
+                string.Format("{0}\n", logic.display_msg),
+                Color.Green
+                );
+            _retVal.cmpStatus = true;
+            return _retVal.cmpStatus;
+        }
+        /// <summary>
+        /// read data from serial
+        /// </summary>
+        /// <param name="logic">task logic</param>
+        /// <returns></returns>
+        public bool boardcast(Logic logic)
+        {
+            this._logic = logic;
+            UpdateUI(
+                string.Format("正在执行：{0}\n", logic.name),
+                Color.Green
+                );
+            comWrite();
             UpdateUI(
                 string.Format("{0}\n", logic.display_msg),
                 Color.Green
