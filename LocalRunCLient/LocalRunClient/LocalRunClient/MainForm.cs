@@ -95,6 +95,11 @@ namespace LocalRunClient
                 runnerList.Clear();
                 for (int i = 0; i < 3;i++ )
                 {
+                    //the com port can be runed which has been seted
+                    if (MainForm.clientConfig.comPortArr[i] == "None")
+                    {
+                        continue;
+                    }
                     runnerList.Add(new Thread(new ParameterizedThreadStart(_runner)));
                     runnerList[i].Start(i);
                 }

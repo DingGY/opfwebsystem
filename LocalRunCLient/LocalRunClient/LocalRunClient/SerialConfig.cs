@@ -26,7 +26,9 @@ namespace LocalRunClient
                 SerialSelectBox2.Items.Add(iterm);
                 SerialSelectBox3.Items.Add(iterm);
             }
-
+            SerialSelectBox1.Items.Add("None");
+            SerialSelectBox2.Items.Add("None");
+            SerialSelectBox3.Items.Add("None");
             SerialSelectBox1.Text = MainForm.clientConfig.comPortArr[0];
             SerialSelectBox2.Text = MainForm.clientConfig.comPortArr[1];
             SerialSelectBox3.Text = MainForm.clientConfig.comPortArr[2];
