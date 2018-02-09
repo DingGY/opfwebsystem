@@ -10,7 +10,7 @@ import json
 import time
 import threading
 # add the module path
-sys.path.append(r"e:\项目\python\web_project\DGYengine")
+sys.path.append(r"..\DGYengine")
 from ClientParse import ClientParse
 from ActionCell import *
 from .models import *

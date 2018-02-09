@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    {% include 'head.html' %}
+</head>
+
+<body>
+
+    <!-- navigation bar -->
+    {% include 'nav_base.html' %}
+    <form class="navbar-form navbar-right" action="/production_record/find" method="GET">
+        <div class="form-group">
+            <input type="text" class="form-control" name="code" placeholder="Bug Quick Search">
+        </div>
+        <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>高科电表装配生产信息</h2>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>资产管理编号</th>
+                    <th>生产IP地址</th>
+                    <th>产品状态</th>
+                    <th>生产时间</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for meter in object_list %}
+                <tr>
+                    <th scope="row">#</th>
+                    <td>{{ meter.asset_management_coding }}</td>
+                    <td>{{ meter.worker_addr }}</td>
+                    <td>{{ meter.product_status }}</td>
+                    <td>{{ meter.product_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-default">
+        <center>
+            <ul class="pagination">
+                <li>
+                    <a href="{{ request.path }}?page=1">«</a>
+                </li>
+                {% if page_obj.has_previous %}
+                <li>
+                    <a href="{{ request.path }}?&page={{ page_obj.previous_page_number }}">上一页</a>
+                </li>
+                {% else %}
+                <li class="previous disabled">
+                    <a>上一页</a>
+                </li>
+                {% endif %} {% for i in page_obj.paginator.page_range %}
+                <li {% ifequal page_obj.number i %}class="active" {% endifequal %}>
+                    <a href="{{ request.path }}?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %} {% if page_obj.has_next %}
+                <li>
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">下一页</a>
+                </li>
+                {% else %}
+                <li class="previous disabled">
+                    <a>下一页</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="{{ request.path }}?page={{ page_obj.paginator.num_pages }}">»</a>
+                </li>
+            </ul>
+        </center>
+    </div>
+    <script src="/static/jquery-1.9.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script src="/static/production_info.js"></script>
+    <script>
+        // window.onload = production_init;
+    </script>
+</body>
+
+</html>

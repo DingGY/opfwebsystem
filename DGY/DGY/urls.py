@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from bug_manage.views import *
+from production_record.views import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -37,4 +38,9 @@ urlpatterns = [
     url(r'^ajax/signup/$', login_signup),
     url(r'^ajax/func/(.+)/$', func_action),
     url(r'^ajax/index/get_task/$', get_task_info),
+    url(r'^production_record/record/$', MeterCodeList.as_view()),
+    url(r'^production_record/clientrecord/$', save_production_info),
+    url(r'^production_record/find/$', MeterCodeFindList.as_view()),
+
+    
 ]

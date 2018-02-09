@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bug_manage',
+    'production_record',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'production-record': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.production-record'),
     }
 }
+
+
+DATABASE_ROUTERS = ['DGY.database_router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {
+    'production_record':  'production-record'
+}
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
